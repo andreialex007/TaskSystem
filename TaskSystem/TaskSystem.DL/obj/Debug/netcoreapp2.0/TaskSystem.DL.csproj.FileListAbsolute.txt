@@ -1,9 +1,0 @@
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\bin\Debug\netcoreapp2.0\TaskSystem.DL.deps.json
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\bin\Debug\netcoreapp2.0\TaskSystem.DL.dll
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.csproj.CoreCompileInputs.cache
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.AssemblyInfoInputs.cache
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.AssemblyInfo.cs
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\bin\Debug\netcoreapp2.0\TaskSystem.DL.pdb
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.csprojResolveAssemblyReference.cache
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.dll
-C:\Users\Andrew\Documents\Visual Studio 2017\Projects\TaskSystem\TaskSystem.DL\obj\Debug\netcoreapp2.0\TaskSystem.DL.pdb
