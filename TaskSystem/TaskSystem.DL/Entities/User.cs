@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using TaskSystem.DL.Entities.Articles;
+using TaskSystem.DL.Entities.Tasks;
 
 namespace TaskSystem.DL.Entities
 {
@@ -11,10 +14,11 @@ namespace TaskSystem.DL.Entities
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public int PositionId { get; set; }
-        public Position Position { get; set; }
+        public int Role { get; set; }
 
-        public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public ICollection<ArticleAttachment> ArticleAttachments { get; set; }
+        public ICollection<Document> Documents { get; set; }
+        public ICollection<WorkTask> WorkTasks { get; set; }
+        public ICollection<WorkTaskNote> WorkTaskNotes { get; set; }
     }
 }
