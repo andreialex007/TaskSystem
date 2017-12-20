@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using ControllerBase = TaskSystem.Controllers._Common.ControllerBase;
 
 namespace TaskSystem.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
@@ -38,6 +39,10 @@ namespace TaskSystem.Controllers
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
+        {
+        }
+
+        public ValuesController(IConfiguration configuration) : base(configuration)
         {
         }
     }
