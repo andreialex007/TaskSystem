@@ -1,4 +1,4 @@
-﻿namespace Supergeek.BL.Models._Common
+﻿namespace TaskSystem.BL.Models
 {
     public class UrlPath
     {

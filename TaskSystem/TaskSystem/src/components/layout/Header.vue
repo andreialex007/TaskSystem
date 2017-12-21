@@ -23,8 +23,6 @@
                         <a class="nav-link" href="#">Users</a>
                     </li>
                 </ul>
-
-
             </div>
             <div class="navbar-brand" href="#">
                 <div class="dropdown">
