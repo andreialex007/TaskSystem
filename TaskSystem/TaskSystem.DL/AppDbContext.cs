@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TaskSystem.DL.Entities;
 using TaskSystem.DL.Entities.Articles;
 using TaskSystem.DL.Entities.Customers;
@@ -15,6 +18,27 @@ namespace TaskSystem.DL
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+        }
+
+        public AppDbContext()
+        {
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (optionsBuilder.IsConfigured) return;
+
+            //Called by parameterless ctor Usually Migrations
+            //var environmentName = Environment.GetEnvironmentVariable("EnvironmentName") ?? "local";
+
+            optionsBuilder.UseSqlServer(
+                new ConfigurationBuilder()
+                    .SetBasePath(Path.GetDirectoryName(GetType().GetTypeInfo().Assembly.Location))
+                    .AddJsonFile($"appsettings.json", false, false)
+                    .Build()
+                    .GetConnectionString("DefaultConnection")
+            );
         }
 
         public DbSet<User> Users { get; set; }

@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using TaskSystem.DL.Entities;
 
 namespace TaskSystem.DL.Migrations
 {
@@ -428,6 +431,10 @@ namespace TaskSystem.DL.Migrations
                 name: "IX_WorkTasks_UserId",
                 table: "WorkTasks",
                 column: "UserId");
+
+
+            
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

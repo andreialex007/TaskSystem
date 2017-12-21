@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using TaskSystem.BL.Utils;
 
 namespace TaskSystem.Controllers._Common
 {
@@ -16,8 +13,8 @@ namespace TaskSystem.Controllers._Common
 
         public ControllerBase(IConfiguration configuration)
         {
+            ServiceProviders.HttpContextFunc = () => HttpContext;
             Configuration = configuration;
-            //this.Configuration["SecurityKey"]
         }
     }
 }

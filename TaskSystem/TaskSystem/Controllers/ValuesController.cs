@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ControllerBase = TaskSystem.Controllers._Common.ControllerBase;
@@ -12,6 +13,7 @@ namespace TaskSystem.Controllers
 	{
 		// GET api/values
 		[HttpGet]
+		[AllowAnonymous]
 		public IEnumerable<string> Get()
 		{
 			return new string[] {"value1", "value2"};

@@ -1,11 +1,15 @@
+using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using TaskSystem.BL.Utils;
 using TaskSystem.DL;
 
 namespace TaskSystem
@@ -48,11 +52,15 @@ namespace TaskSystem
                     .AllowAnyHeader()));
 
             services.AddMvc();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AppDbContext db)
         {
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -60,6 +68,10 @@ namespace TaskSystem
 
             app.UseMvc();
             InitializeDatabase(app);
+
+            DbInitializer.Initialize(db);
+
+
         }
 
         private void InitializeDatabase(IApplicationBuilder app)
