@@ -9,12 +9,13 @@
 
                 <div v-show="hasLoginErrors" class="alert alert-danger" role="alert">
                     <strong>Errors!</strong>
-                    <span>{{ loginErrorsText }}</span>
+                    <br />
+                    <span class="errors-list">{{ loginErrorsText }}</span>
                 </div>
 
-                <input type="text" class="form-control" placeholder="Email address" autofocus>
+                <input type="text" v-model="email" class="form-control" placeholder="Email address" autofocus>
 
-                <input type="password" class="form-control user-password-input" placeholder="Password">
+                <input type="password" v-model="password" class="form-control user-password-input" placeholder="Password">
 
                 <div class="checkbox">
                     <label>
@@ -58,13 +59,15 @@
                     JSON.stringify({ Username: this.email, Password: this.password }),
                     {
                         headers: { 'Content-Type': "application/json" },
-                        // responseType: "json"
+                        responseType: "json"
                     })
                     .then(x => {
-
+                        localStorage.isUserLoggedIn = true;
+                        localStorage.authToken = x.token;
+                        this.$router.push({ path: '/' })
                     })
                     .catch(x => {
-                        component.loginErrorsText = x.body;
+                        component.loginErrorsText = x.body.allErrors;
                     });
             }
         },

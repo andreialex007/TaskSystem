@@ -35,7 +35,7 @@
                             <i class="fa fa-id-card" aria-hidden="true"></i>
                             Profile
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" v-on:click="logout" href="javascript:;">
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                             Logout
                         </a>
@@ -56,5 +56,13 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        methods: {
+            logout() {
+                localStorage.isUserLoggedIn = "false";
+                localStorage.authToken = "";
+                this.$router.push({ path: '/login' })
+            }
+        }
+    }
 </script>

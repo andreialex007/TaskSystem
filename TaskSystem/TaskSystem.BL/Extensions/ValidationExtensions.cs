@@ -40,7 +40,7 @@ namespace TaskSystem.BL.Extensions
             var validationContext = new ValidationContext(entityBase, null, null);
             var errors = new List<ValidationResult>();
             Validator.TryValidateObject(entityBase, validationContext, errors, true);
-            return errors.SelectMany(x => x.MemberNames.Select(m => new DbValidationError(m, x.ErrorMessage)));
+            return errors.SelectMany(x => x.MemberNames.Select(m => new DbValidationError(x.ErrorMessage, m)));
         }
 
         private static IEnumerable<DbValidationError> GetErrorsForProperties<T>(this T entityBase,
@@ -57,7 +57,7 @@ namespace TaskSystem.BL.Extensions
                                         };
                 var errors = new List<ValidationResult>();
                 Validator.TryValidateProperty(propertyValue, validationContext, errors);
-                validationErrors.AddRange(errors.Select(x => new DbValidationError(propertyName, x.ErrorMessage)));
+                validationErrors.AddRange(errors.Select(x => new DbValidationError(x.ErrorMessage, propertyName)));
             }
             return validationErrors;
         }

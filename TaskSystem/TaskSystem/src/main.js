@@ -20,6 +20,7 @@ import router from "./router"
 import main from './components/Main.vue'
 
 localStorage.isUserLoggedIn = localStorage.isUserLoggedIn || false;
+localStorage.authToken = "";
 
 window.appRoot = "http://localhost:12395/api";
 //Vue.http.options.root = 'http://localhost:12395/api';

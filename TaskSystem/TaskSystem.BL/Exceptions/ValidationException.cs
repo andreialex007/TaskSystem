@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using TaskSystem.BL.Utils;
 
@@ -19,10 +20,15 @@ namespace TaskSystem.BL.Exceptions
         {
         }
 
+        public string AllErrors
+        {
+            get { return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage)); }
+        }
+
         public ValidationException(string validationSummary)
             : this()
         {
-            Errors.Add(new DbValidationError(string.Empty, validationSummary));
+            Errors.Add(new DbValidationError(validationSummary));
         }
 
         protected ValidationException(SerializationInfo info, StreamingContext context)

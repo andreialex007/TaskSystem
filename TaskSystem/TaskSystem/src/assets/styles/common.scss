@@ -54,7 +54,7 @@ body {
 }
 
 .form-signin {
-    width: 330px;
+    width: 393px;
     padding: 15px;
     margin: 0 auto;
     margin-top: 72px;
@@ -95,4 +95,8 @@ body {
 
 .user-password-input {
     border-radius: 5px !important;
+}
+
+.errors-list {
+    white-space: pre-line;
 }

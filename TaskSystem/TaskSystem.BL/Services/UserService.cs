@@ -22,7 +22,7 @@ namespace TaskSystem.BL.Services
 
             var hash = Hasher.HashPassword(item.Password);
 
-            var user = Db.Users.SingleOrDefault(x => x.Id == item.Id && x.Password == hash);
+            var user = Db.Users.SingleOrDefault(x => x.Email == item.Email && x.Password == hash);
             if (user == null)
                 throw new ValidationException("User name or password is invalid");
 

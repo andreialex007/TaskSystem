@@ -13,6 +13,7 @@ namespace TaskSystem.Code
                 context.Result = new JsonResult(new
                 {
                     ex.Errors,
+                    ex.AllErrors,
                     HasErrors = true
                 });
 
