@@ -13,19 +13,3 @@
         }
     }
 </script>
-
-<style scoped lang="scss">
-    .app-footer {
-        background-color: #e5e4e4;
-        padding: 10px;
-        font-size: 14px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        .info
-
-    {
-        float: right;
-    }
-
-    }
-</style>

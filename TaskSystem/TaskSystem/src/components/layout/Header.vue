@@ -58,22 +58,3 @@
 <script>
     export default {}
 </script>
-
-<style lang="scss">
-    #navbarResponsive {
-        display: inline-block !important;
-        float: left;
-    }
-
-    .nav-bar-container {
-        margin-right: 0px;
-        margin-left: 0px;
-        max-width: 100%;
-        padding-right: 0px;
-    }
-
-    .dropdown-menu-right {
-        left: auto;
-        right: 0px;
-    }
-</style>

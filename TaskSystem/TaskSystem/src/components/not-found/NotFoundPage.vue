@@ -1,5 +1,5 @@
 <template>
   <div>
-    First component
+    404 - not found
   </div>
 </template>
