@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -55,5 +57,16 @@ namespace TaskSystem.DL
         public DbSet<Document> Documents { get; set; }
         public DbSet<WorkTask> WorkTasks { get; set; }
         public DbSet<WorkTaskNote> WorkTaskNotes { get; set; }
+
+
+        public override int SaveChanges()
+        {
+            IEnumerable<ValidationResult> validationErrors = ChangeTracker
+                .Entries<IValidatableObject>()
+                .SelectMany(e => e.Entity.Validate(null))
+                .Where(r => r != ValidationResult.Success);
+
+            return base.SaveChanges();  
+        }
     }
 }

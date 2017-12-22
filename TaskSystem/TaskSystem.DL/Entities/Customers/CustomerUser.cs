@@ -3,7 +3,7 @@ using TaskSystem.DL.Entities.Tasks;
 
 namespace TaskSystem.DL.Entities.Customers
 {
-    public class CustomerUser
+    public class CustomerUser : IPkidEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

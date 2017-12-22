@@ -1,6 +1,6 @@
 ﻿namespace TaskSystem.DL.Entities.Articles
 {
-    public class ArticleAttachment
+    public class ArticleAttachment : IPkidEntity
     {
         public int Id { get; set; }
         public string Path { get; set; }

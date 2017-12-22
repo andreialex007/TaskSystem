@@ -1,6 +1,6 @@
 ﻿namespace TaskSystem.DL.Entities.Invoices
 {
-    public class CommonInvoiceElement
+    public class CommonInvoiceElement : IPkidEntity
     {
         public int Id { get; set; }
         public string Description { get; set; }

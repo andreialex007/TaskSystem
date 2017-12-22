@@ -3,7 +3,7 @@ using TaskSystem.DL.Entities.Customers;
 
 namespace TaskSystem.DL.Entities.Invoices
 {
-    public class Invoice
+    public class Invoice : IPkidEntity
     {
         public int Id { get; set; }
 

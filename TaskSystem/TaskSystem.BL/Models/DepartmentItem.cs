@@ -1,6 +1,6 @@
 ﻿namespace TaskSystem.BL.Models
 {
-    internal class DepartmentItem
+    internal class DepartmentItem : ViewModelBase
     {
     }
 }

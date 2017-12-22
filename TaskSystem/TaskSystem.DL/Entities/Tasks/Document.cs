@@ -1,6 +1,6 @@
 ﻿namespace TaskSystem.DL.Entities.Tasks
 {
-    public class Document
+    public class Document : IPkidEntity
     {
         public int Id { get; set; }
         public string Path { get; set; }

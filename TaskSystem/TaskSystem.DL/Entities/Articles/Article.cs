@@ -2,7 +2,7 @@
 
 namespace TaskSystem.DL.Entities.Articles
 {
-    public class Article
+    public class Article : IPkidEntity
     {
         public int Id { get; set; }
 

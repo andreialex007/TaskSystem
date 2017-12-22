@@ -2,7 +2,7 @@
 
 namespace TaskSystem.DL.Entities.Tasks
 {
-    public class WorkTaskNote
+    public class WorkTaskNote : IPkidEntity
     {
         public int Id { get; set; }
 

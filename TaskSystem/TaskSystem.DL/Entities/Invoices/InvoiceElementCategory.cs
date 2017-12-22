@@ -2,7 +2,7 @@
 
 namespace TaskSystem.DL.Entities.Invoices
 {
-    public class InvoiceElementCategory
+    public class InvoiceElementCategory : IPkidEntity
     {
         public int Id { get; set; }
 

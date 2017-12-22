@@ -6,7 +6,7 @@ using TaskSystem.DL.Entities.Tasks;
 
 namespace TaskSystem.DL.Entities
 {
-    public class User
+    public class User : IPkidEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -4,7 +4,7 @@ using TaskSystem.DL.Entities.Invoices;
 
 namespace TaskSystem.DL.Entities.Tasks
 {
-    public class WorkTask
+    public class WorkTask : IPkidEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

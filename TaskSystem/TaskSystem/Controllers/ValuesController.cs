@@ -5,18 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using TaskSystem.DL;
 using ControllerBase = TaskSystem.Controllers._Common.ControllerBase;
 
 namespace TaskSystem.Controllers
 {
 	public class ValuesController : ControllerBase
 	{
+		public ValuesController(IConfiguration configuration, AppDbContext appDbContext)
+			: base(configuration, appDbContext)
+		{
+		}
+
 		// GET api/values
 		[HttpGet]
 		[AllowAnonymous]
 		public IEnumerable<string> Get()
 		{
-			return new string[] {"value1", "value2"};
+			return new string [] { "value1", "value2" };
 		}
 
 		// GET api/values/5
@@ -44,8 +50,5 @@ namespace TaskSystem.Controllers
 		{
 		}
 
-		public ValuesController(IConfiguration configuration) : base(configuration)
-		{
-		}
 	}
 }

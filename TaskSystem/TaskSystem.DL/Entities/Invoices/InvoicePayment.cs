@@ -2,7 +2,7 @@
 
 namespace TaskSystem.DL.Entities.Invoices
 {
-    public class InvoicePayment
+    public class InvoicePayment : IPkidEntity
     {
         public int Id { get; set; }
         public DateTime PaymentDate { get; set; }
