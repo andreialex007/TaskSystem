@@ -14,7 +14,7 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-	if (localStorage.isUserLoggedIn == "true") {
+	if (window.isUserLoggedIn()) {
 		if (to.path.toLowerCase() == "/login") {
 			next({ path: '/' });
 			return;

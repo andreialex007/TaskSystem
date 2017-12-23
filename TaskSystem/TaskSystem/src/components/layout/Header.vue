@@ -59,7 +59,6 @@
     export default {
         methods: {
             logout() {
-                localStorage.isUserLoggedIn = "false";
                 localStorage.authToken = "";
                 this.$router.push({ path: '/login' })
             }

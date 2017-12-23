@@ -49,11 +49,16 @@
         computed: {
             hasLoginErrors() {
                 return !!this.loginErrorsText
+            },
+            viewMyProp() {
+                return this.$store.getters.getMyProp;
             }
         },
         methods: {
             tryLogin() {
                 let component = this;
+
+                this.$store.commit('subModule/setTestValue', "magic-value");
 
                 this.$http.post(window.appRoot + "/account/requesttoken",
                     JSON.stringify({ Username: this.email, Password: this.password }),
@@ -62,7 +67,6 @@
                         responseType: "json"
                     })
                     .then(x => {
-                        localStorage.isUserLoggedIn = true;
                         localStorage.authToken = x.token;
                         this.$router.push({ path: '/' })
                     })
