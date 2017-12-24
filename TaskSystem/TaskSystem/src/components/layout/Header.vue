@@ -4,29 +4,23 @@
         <div class="container nav-bar-container">
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">
-                            Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tasks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Customers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Invoices</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Users</a>
-                    </li>
+                    <template v-for="item in allRoutes">
+                        <li v-bind:class="{ active: item.active }" class="nav-item ">
+                            <a class="nav-link" v-on:click="goToLink" v-bind:href="item.path">
+                                {{ item.name }}
+                            </a>
+                        </li>
+                    </template>
                 </ul>
             </div>
             <div class="navbar-brand" href="#">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                         <i class="fa fa-user"></i>
                         <span>Admin</span>
                     </button>
@@ -61,7 +55,32 @@
             logout() {
                 localStorage.authToken = "";
                 this.$router.push({ path: '/login' })
+            },
+            goToLink(event) {
+                //
+               // setTimeout(() => { this.$router.go() }, 10);
+                this.$router.push({ path: $(event.target).attr("href") })
+                event.preventDefault();
+                return false;
             }
+        },
+        computed: {
+            allRoutes() {
+                let allRoutes = window.mainRoutes;
+                let routesToDraw = [];
+                for (let route of allRoutes) {
+                    let clone = { ...route }
+                    if (route.exact) {
+                        clone.active = route.path === location.pathname;
+                    } else {
+                        clone.active = location.pathname.toLowerCase().startsWith(route.path.toLowerCase());
+                    }
+                    routesToDraw.push(clone);
+                }
+                return routesToDraw;
+            }
+        },
+        mounted() {
         }
     }
 </script>

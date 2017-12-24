@@ -1,6 +1,6 @@
 <template>
     <main-layout>
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12">
             <h1 class="mt-5">A Bootstrap 4 Starter Template</h1>
             <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>
             <ul class="list-unstyled">
