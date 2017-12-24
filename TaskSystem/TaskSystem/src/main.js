@@ -8,7 +8,6 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Vuex);
 
-
 //styles
 import fontAwesome from './assets/font-awesome-4.7.0/css/font-awesome.css'
 import bootstrap from './assets/bootstrap/css/bootstrap.css'
@@ -23,17 +22,21 @@ import router from "./router"
 import { storeModel } from "./store/app.main.js"
 import main from './components/Main.vue'
 
-localStorage.authToken = "";
 window.isUserLoggedIn = function () {
   return !!localStorage.authToken;
 }
 
 window.appRoot = "http://localhost:12395/api";
-//Vue.http.options.root = 'http://localhost:12395/api';
-//Vue.http.headers.common['Content-Type'] = "application/json";
+Vue.http.options.responseType = "json";
+
+Vue.http.interceptors.push(function (request, next) {
+  request.headers['Authorization'] = `Bearer ${localStorage.authToken}`;
+  request.headers['Accept'] = 'application/json';
+  request.url = window.appRoot + request.url;
+  next();
+});
 
 let store = new Vuex.Store(storeModel);
-
 
 new Vue({
   el: '#app',
@@ -44,4 +47,4 @@ new Vue({
   }
 });
 
-export const eventBus = new Vue();
+

@@ -49,25 +49,16 @@
         computed: {
             hasLoginErrors() {
                 return !!this.loginErrorsText
-            },
-            viewMyProp() {
-                return this.$store.getters.getMyProp;
             }
         },
         methods: {
             tryLogin() {
                 let component = this;
-
-                this.$store.commit('subModule/setTestValue', "magic-value");
-
-                this.$http.post(window.appRoot + "/account/requesttoken",
-                    JSON.stringify({ Username: this.email, Password: this.password }),
-                    {
-                        headers: { 'Content-Type': "application/json" },
-                        responseType: "json"
-                    })
+                
+                this.$http.post("/account/requesttoken",
+                    JSON.stringify({ Username: this.email, Password: this.password }))
                     .then(x => {
-                        localStorage.authToken = x.token;
+                        localStorage.authToken = x.body.token;
                         this.$router.push({ path: '/' })
                     })
                     .catch(x => {

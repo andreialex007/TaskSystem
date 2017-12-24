@@ -7,6 +7,7 @@
                 <li>Bootstrap 4.0.0-beta</li>
                 <li>jQuery 3.2.1</li>
             </ul>
+            <span v-on:click="testAccess" class="btn btn-primary">test access</span>
         </div>
     </main-layout>
 </template>
@@ -20,7 +21,34 @@
             mainLayout
         },
         methods: {
-            logout() {
+            testAccess() {
+
+                
+                $.ajax({
+                    type: 'GET',
+                    url: window.appRoot + '/values',
+                    beforeSend: function (xhr) {
+                        var token = localStorage.authToken;
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+                    fail: function (data) {
+                        console.log(data);
+                    }
+                });
+                
+
+                /*
+                this.$http.get("/values")
+                    .then(x => {
+                        debugger;
+                    })
+                    .catch(x => {
+                        component.loginErrorsText = x.body.allErrors;
+                    });*/
+                
 
             }
         }

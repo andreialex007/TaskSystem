@@ -1,7 +1,10 @@
+using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using TaskSystem.BL.Utils;
+using TaskSystem.Code;
 using TaskSystem.DL;
 
 namespace TaskSystem
@@ -29,20 +33,27 @@ namespace TaskSystem
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
 
-            services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(x =>
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    x.TokenValidationParameters = new TokenValidationParameters
+                    var keyByteArray = Encoding.ASCII.GetBytes("sdfsdfsfsdfdfsfsdf34234234242389o-------------------fsdfsdfsdfsdfsdf");
+                    var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(keyByteArray);
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
+                        IssuerSigningKey = signingKey,
+                        ValidAudience = "Audience",
+                        ValidIssuer = "Issuer",
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "yourdomain.com",
-                        ValidAudience = "yourdomain.com",
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration ["SecurityKey"]))
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromMinutes(0)
                     };
                 });
 

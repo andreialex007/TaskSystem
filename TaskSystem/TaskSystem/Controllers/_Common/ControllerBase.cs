@@ -8,7 +8,7 @@ using TaskSystem.DL;
 
 namespace TaskSystem.Controllers._Common
 {
-    [Authorize]
+    [Authorize("Bearer")]
     [ApiExceptionFilter]
     [Route("api/[controller]")]
     public class ControllerBase : Controller
