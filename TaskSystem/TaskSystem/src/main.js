@@ -12,9 +12,13 @@ Vue.use(Vuex);
 import fontAwesome from './assets/font-awesome-4.7.0/css/font-awesome.css'
 import bootstrap from './assets/bootstrap/css/bootstrap.css'
 import commonStyles from './assets/styles/common.scss'
+import bootstrap4Datatables from './assets/styles/datatables.css'
 
 //scripts
-window.$ = window.jQuery = require('./assets/scripts/jquery-3.2.1.min');
+window.$ = require('jquery');
+var dt = require('datatables.net-bs4');
+window.$.DataTable = dt;
+
 window.moment = require('./assets/scripts/moment');
 require('./assets/bootstrap/js/bootstrap.bundle');
 
