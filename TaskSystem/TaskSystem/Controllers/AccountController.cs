@@ -36,48 +36,28 @@ namespace TaskSystem.Controllers
 
         private string GeneratedToken(User user)
         {
-            var claims = new [] { new Claim(ClaimTypes.Name, user.Email) };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration ["SecurityKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var requestAt = DateTime.Now;
-            var expiresIn = requestAt.Add(TimeSpan.FromMinutes(30));
-            var handler = new JwtSecurityTokenHandler();
-
-            ClaimsIdentity identity = new ClaimsIdentity(
+            var identity = new ClaimsIdentity(
                 new GenericIdentity(user.Email, "TokenAuth"),
-                new [] {
-                    new Claim("Name", user.Email)
+                new []
+                {
+                    new Claim("Email", user.Email)
                 }
             );
 
-            var keyByteArray = Encoding.ASCII.GetBytes("sdfsdfsfsdfdfsfsdf34234234242389o-------------------fsdfsdfsdfsdfsdf");
-            var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(keyByteArray);
+            var keyByteArray = Encoding.ASCII.GetBytes(Configuration ["SecurityKey"]);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
+
+            var handler = new JwtSecurityTokenHandler();
             var securityToken = handler.CreateToken(new SecurityTokenDescriptor
             {
-
                 Issuer = "Issuer",
                 Audience = "Audience",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
                 Subject = identity,
-                Expires = expiresIn,
+                Expires = DateTime.Now.AddMinutes(30),
                 NotBefore = DateTime.Now.Subtract(TimeSpan.FromMinutes(30))
             });
 
-
-            //
-            //
-            //            var identity = GetIdentity(user.Email);
-            //
-            //            var now = DateTime.UtcNow;
-            //            var jwt = new JwtSecurityToken(
-            //                issuer: AuthOptions.ISSUER,
-            //                audience: AuthOptions.AUDIENCE,
-            //                notBefore: now,
-            //                claims: identity.Claims,
-            //                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-            //                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            //            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             return handler.WriteToken(securityToken);
         }
 

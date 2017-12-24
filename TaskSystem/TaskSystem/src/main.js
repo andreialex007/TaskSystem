@@ -29,11 +29,18 @@ window.isUserLoggedIn = function () {
 window.appRoot = "http://localhost:12395/api";
 Vue.http.options.responseType = "json";
 
-Vue.http.interceptors.push(function (request, next) {
-  request.headers['Authorization'] = `Bearer ${localStorage.authToken}`;
-  request.headers['Accept'] = 'application/json';
+Vue.http.interceptors.push((request, next) => {
   request.url = window.appRoot + request.url;
-  next();
+
+  request.headers.set('Authorization', `Bearer ${localStorage.authToken}`);
+  request.headers.set('Accept', 'application/json');
+
+  next((response) => {
+    if (response.status == 401) {
+      localStorage.authToken = "";
+      router.go('/login');
+    }
+  });
 });
 
 let store = new Vuex.Store(storeModel);

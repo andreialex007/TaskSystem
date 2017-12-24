@@ -43,10 +43,10 @@ namespace TaskSystem
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    var keyByteArray = Encoding.ASCII.GetBytes("sdfsdfsfsdfdfsfsdf34234234242389o-------------------fsdfsdfsdfsdfsdf");
-                    var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(keyByteArray);
+                    var keyByteArray = Encoding.ASCII.GetBytes(Configuration ["SecurityKey"]);
+                    var signingKey = new SymmetricSecurityKey(keyByteArray);
 
-                    options.TokenValidationParameters = new TokenValidationParameters()
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey = signingKey,
                         ValidAudience = "Audience",

@@ -23,33 +23,13 @@
         methods: {
             testAccess() {
 
-                
-                $.ajax({
-                    type: 'GET',
-                    url: window.appRoot + '/values',
-                    beforeSend: function (xhr) {
-                        var token = localStorage.authToken;
-                        xhr.setRequestHeader("Authorization", "Bearer " + token);
-                    },
-                    success: function (data) {
-                        alert(data);
-                    },
-                    fail: function (data) {
-                        console.log(data);
-                    }
-                });
-                
-
-                /*
                 this.$http.get("/values")
                     .then(x => {
                         debugger;
                     })
                     .catch(x => {
                         component.loginErrorsText = x.body.allErrors;
-                    });*/
-                
-
+                    });
             }
         }
     }
