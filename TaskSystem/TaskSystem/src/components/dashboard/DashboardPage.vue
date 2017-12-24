@@ -24,12 +24,7 @@
             testAccess() {
 
                 this.$http.get("/values")
-                    .then(x => {
-                        debugger;
-                    })
-                    .catch(x => {
-                        component.loginErrorsText = x.body.allErrors;
-                    });
+                    .then(x => { debugger; });
             }
         }
     }

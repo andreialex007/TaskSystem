@@ -1,25 +1,22 @@
 using System;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using TaskSystem.BL.Utils;
-using TaskSystem.Code;
 using TaskSystem.DL;
 
 namespace TaskSystem
 {
     public class Startup
     {
+        public static string ValidIssuer = "ValidIssuer";
+        public static string ValidAudience = "ValidAudience";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,20 +37,22 @@ namespace TaskSystem
                     .RequireAuthenticatedUser().Build());
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(x =>
                 {
-                    var keyByteArray = Encoding.ASCII.GetBytes(Configuration ["SecurityKey"]);
-                    var signingKey = new SymmetricSecurityKey(keyByteArray);
-
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    x.TokenValidationParameters = new TokenValidationParameters
                     {
-                        IssuerSigningKey = signingKey,
-                        ValidAudience = "Audience",
-                        ValidIssuer = "Issuer",
-                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromMinutes(0)
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = ValidIssuer,
+                        ValidAudience = ValidAudience,
+                        RequireExpirationTime = true,
+                        ClockSkew = TimeSpan.Zero,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration ["SecurityKey"]))
                     };
                 });
 
@@ -63,9 +62,6 @@ namespace TaskSystem
                     .AllowAnyHeader()));
 
             services.AddMvc();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,8 +77,6 @@ namespace TaskSystem
             InitializeDatabase(app);
 
             DbInitializer.Initialize(db);
-
-
         }
 
         private void InitializeDatabase(IApplicationBuilder app)

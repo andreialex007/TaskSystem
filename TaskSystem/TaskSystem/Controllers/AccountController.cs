@@ -36,41 +36,19 @@ namespace TaskSystem.Controllers
 
         private string GeneratedToken(User user)
         {
-            var identity = new ClaimsIdentity(
-                new GenericIdentity(user.Email, "TokenAuth"),
-                new []
-                {
-                    new Claim("Email", user.Email)
-                }
-            );
+            var claims = new [] { new Claim(ClaimTypes.Name, user.Email) };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration ["SecurityKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var keyByteArray = Encoding.ASCII.GetBytes(Configuration ["SecurityKey"]);
-            var signingKey = new SymmetricSecurityKey(keyByteArray);
+            var token = new JwtSecurityToken(
+                Startup.ValidIssuer,
+                Startup.ValidAudience,
+                claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
 
-            var handler = new JwtSecurityTokenHandler();
-            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = "Issuer",
-                Audience = "Audience",
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                Subject = identity,
-                Expires = DateTime.Now.AddMinutes(30),
-                NotBefore = DateTime.Now.Subtract(TimeSpan.FromMinutes(30))
-            });
-
-            return handler.WriteToken(securityToken);
-        }
-
-        private ClaimsIdentity GetIdentity(string username)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, username),
-            };
-            ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity;
+            var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            return generatedToken;
         }
     }
 }
