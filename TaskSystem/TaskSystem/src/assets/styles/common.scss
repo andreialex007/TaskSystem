@@ -104,3 +104,11 @@ body {
 #navbarResponsive .nav-link {
     text-transform: capitalize;
 }
+
+.data-table-template {
+    display: none;
+}
+
+.data-table-template table {
+    table-layout: fixed;
+}
