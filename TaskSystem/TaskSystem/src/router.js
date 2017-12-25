@@ -22,6 +22,7 @@ const router = new VueRouter({
 		{ path: "/login", component: login, name: "login" },
 		...mainRoutes,
 		{ path: "/users/add", component: editUser, name: "addUser", exact: false },
+		{ path: "/users/:id", component: editUser, name: "editUser", exact: false },
 		{ path: '*', component: notFound }
 	],
 	mode: "history"

@@ -24,7 +24,7 @@ namespace TaskSystem.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id = null)
         {
-            var users = Service.User.All();
+            var users = Service.User.Edit(id);
             return Ok(users);
         }
 

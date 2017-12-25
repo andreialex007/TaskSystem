@@ -2,7 +2,7 @@
     <main-layout>
         <div class="col-lg-12">
             <h1 class="mt-5">
-                Users page 
+                Users page
                 <span v-on:click="addItem" class="btn btn-success pull-right">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                     Add user
@@ -81,7 +81,7 @@
         },
         methods: {
             editItem(item) {
-                console.log("edit");
+                this.$router.push({ path: "/users/" + item.id })
             },
             deleteItem(item) {
                 console.log("delete");

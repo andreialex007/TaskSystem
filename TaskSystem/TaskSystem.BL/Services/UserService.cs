@@ -16,9 +16,9 @@ namespace TaskSystem.BL.Services
         {
         }
 
-        public User Login(UserItem item)
+        public User Login(UserLoginItem item)
         {
-            var errors = item.GetValidationErrors(x => x.Email, x => x.Password);
+            var errors = item.GetValidationErrors();
             errors.ThrowIfHasErrors();
 
             var hash = Hasher.HashPassword(item.Password);
@@ -32,7 +32,7 @@ namespace TaskSystem.BL.Services
 
         public User Login(string email, string password)
         {
-            return Login(new UserItem { Email = email, Password = password });
+            return Login(new UserLoginItem { Email = email, Password = password });
         }
 
         public List<UserItem> All()
@@ -53,7 +53,7 @@ namespace TaskSystem.BL.Services
 
         public UserItem Edit(int? id = null)
         {
-            var user = id.HasValue
+            var user = !id.HasValue
                  ? new UserItem()
                  : Db.Users
                      .Select(x => new UserItem
@@ -72,21 +72,27 @@ namespace TaskSystem.BL.Services
 
         public void Save(UserItem item)
         {
-            item.GetValidationErrors(
-                x => x.Email,
-                x => x.FirstName,
-                x => x.LastName,
-                x => x.Phone,
-                x => x.Role
-            ).ThrowIfHasErrors();
+            var errors = item.GetValidationErrors();
+            if (item.Id == 0 && item.Password.IsEmptyOrWhiteSpace())
+                errors.Add(new DbValidationError("Password is empty, please provide password for new user"));
+            errors.ThrowIfHasErrors();
 
-
-            var user = item.Id == 0 ? Db.CreateAndAdd<User>() : Db.Users.Single(x => x.Id == item.Id);
+            User user;
+            if (item.Id == 0)
+            {
+                user = Db.CreateAndAdd<User>();
+                user.Password = item.Password;
+            }
+            else
+            {
+                user = Db.Users.Single(x => x.Id == item.Id);
+            }
             user.Email = item.Email;
             user.FirstName = item.FirstName;
             user.LastName = item.LastName;
             user.Phone = item.Phone;
             user.Role = item.Role;
+
             Db.SaveChanges();
 
             item.Id = user.Id;

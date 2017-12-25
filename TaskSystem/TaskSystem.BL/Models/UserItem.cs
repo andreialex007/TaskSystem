@@ -22,13 +22,12 @@ namespace TaskSystem.BL.Models
         [Required]
         public string Phone { get; set; }
 
-        [Required]
         public string Password { get; set; }
 
         [Required]
         public int Role { get; set; }
 
-        public string RoleName => Role.CastTo<RoleEnum>().DescriptionAttr();
+        public string RoleName => Role == 0 ? string.Empty : Role.CastTo<RoleEnum>().DescriptionAttr();
 
         public Dictionary<int, string> AvaliableRoles => EnumUtil.ToDictionary<RoleEnum>();
     }
