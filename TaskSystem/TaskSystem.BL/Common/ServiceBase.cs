@@ -1,4 +1,5 @@
 ﻿using System;
+using TaskSystem.BL.Extensions;
 using TaskSystem.DL;
 
 namespace TaskSystem.BL.Common
@@ -11,5 +12,6 @@ namespace TaskSystem.BL.Common
         {
             Db = db;
         }
+
     }
 }

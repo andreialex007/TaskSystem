@@ -23,6 +23,9 @@
         watch: {
             items() {
                 this.initTable();
+            },
+            options() {
+                this.initTable();
             }
         },
         methods: {

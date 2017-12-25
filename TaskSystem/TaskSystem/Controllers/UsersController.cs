@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using TaskSystem.BL.Models;
 using TaskSystem.DL;
 using ControllerBase = TaskSystem.Controllers._Common.ControllerBase;
 
@@ -16,13 +12,36 @@ namespace TaskSystem.Controllers
         {
         }
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("All")]
         public IActionResult All()
         {
             var users = Service.User.All();
             return Ok(users);
+        }
+
+        [HttpPost]
+        [Route("edit/{id?}")]
+        public IActionResult Edit(int? id = null)
+        {
+            var users = Service.User.All();
+            return Ok(users);
+        }
+
+        [HttpPost]
+        [Route("save")]
+        public IActionResult Save([FromBody] UserItem item)
+        {
+            Service.User.Save(item);
+            return Ok(item);
+        }
+
+        [HttpPost]
+        [Route("delete/{id?}")]
+        public IActionResult Delete(int id)
+        {
+            Service.User.Delete(id);
+            return Ok();
         }
 
     }

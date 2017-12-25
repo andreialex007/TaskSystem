@@ -2,7 +2,8 @@
     <main-layout>
         <div class="col-lg-12">
             <h1 class="mt-5">
-                Users page <span class="btn btn-success pull-right">
+                Users page 
+                <span v-on:click="addItem" class="btn btn-success pull-right">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                     Add user
                 </span>
@@ -84,6 +85,9 @@
             },
             deleteItem(item) {
                 console.log("delete");
+            },
+            addItem() {
+                this.$router.push({ name: "addUser" })
             },
             load() {
                 this.$http.post("/Users/All")

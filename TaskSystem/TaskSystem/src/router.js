@@ -2,6 +2,7 @@ import dashboard from "./components/dashboard/DashboardPage.vue"
 import login from "./components/login/LoginPage.vue"
 import tasks from "./components/tasks/TasksPage.vue"
 import users from "./components/users/UsersPage.vue"
+import editUser from "./components/users/EditUserPage.vue"
 import invoices from "./components/invoices/InvoicesPage.vue"
 import customers from "./components/customers/CustomersPage.vue"
 import notFound from "./components/not-found/NotFoundPage.vue"
@@ -13,12 +14,14 @@ window.mainRoutes = [
 	{ path: "/customers", component: customers, name: "customers", exact: false },
 	{ path: "/invoices", component: invoices, name: "invoices", exact: false },
 	{ path: "/users", component: users, name: "users", exact: false }
+	
 ];
 
 const router = new VueRouter({
 	routes: [
 		{ path: "/login", component: login, name: "login" },
 		...mainRoutes,
+		{ path: "/users/add", component: editUser, name: "addUser", exact: false },
 		{ path: '*', component: notFound }
 	],
 	mode: "history"

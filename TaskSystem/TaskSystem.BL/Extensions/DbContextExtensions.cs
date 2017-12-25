@@ -29,6 +29,13 @@ namespace TaskSystem.BL.Extensions
             db.SaveChanges();
         }
 
+        public static T CreateAndAdd<T>(this AppDbContext db) where T : class, IPkidEntity, new ()
+        {
+            var entity1 = new T();
+            db.Set<T>().Add(entity1);
+            return entity1;
+        }
+
         public static void AttachAndAdd<T>(this AppDbContext db, T entity) where T : class, IPkidEntity
         {
             db.Set<T>().Attach(entity);
