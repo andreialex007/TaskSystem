@@ -1,27 +1,46 @@
 <template>
     <main-layout>
         <div class="col-lg-12">
-            <h1 class="mt-5">Users page</h1>
+            <h1 class="mt-5">
+                Users page <span class="btn btn-success pull-right">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    Add user
+                </span>
+            </h1>
             <hr />
-            <data-table v-bind:options="tableOptions">
-                <div class="data-table-template" >
-                    <table class="table">
-                        <thead>
+            <data-table v-bind:items="items" v-bind:options="tableOptions">
+                <div class="data-table-template">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>Id</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
+                                <th>Phone</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            <tr v-for="item in items">
+                                <th>{{ item.id }}</th>
+                                <th>{{ item.firstName }}</th>
+                                <th>{{ item.lastName }}</th>
+                                <th>{{ item.email }}</th>
+                                <th>{{ item.phone }}</th>
+                                <th>
+                                    <a title="edit" v-on:click="editItem(item)" class="edit btn btn-primary btn-sm" href="javascript:;">
+                                        <i class="fa fa-edit"></i>
+                                        Edit
+                                    </a>
+                                    <a title="edit" v-on:click="deleteItem(item)" class="edit btn btn-danger btn-sm" href="javascript:;">
+                                        <i class="fa fa-times"></i>
+                                        Delete
+                                    </a>
+                                </th>
+                            </tr>
+                        </tbody>
                     </table>
-                    <div class="edit-column-template data-table-template">
-                        <a title="edit" class="edit btn default btn-xs blue" href="javascript:;">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    </div>
                 </div>
             </data-table>
 
@@ -43,69 +62,36 @@
         data() {
             return {
                 tableOptions: {
-                    columns: [
-                        { "data": "Id" },
-                        { "data": "FirstName" },
-                        { "data": "LastName" },
-                        { "data": "Email" },
-                        { "data": "Actions" }
-                    ],
                     "aoColumnDefs": [
                         {
                             bSortable: false,
-                            sDefaultContent: $("#tickets-list-page-actions-column-template").html(),
                             aTargets: [-1]
                         }
                     ],
                     order: [
                         [0, "asc"]
                     ]
-                }
+                },
+                items: []
             };
         },
         mounted() {
-            /*
-             self.table = $('.tickets-list-page table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    "url": "/Tickets/Search",
-                    "type": "POST",
-                    data: function (data) {
-                        data.isCurrent = $(".current-filter :checkbox").is(":checked");
-                    }
-                },
-                "columns": [
-                    { "data": "PKID" },
-                    { "data": "CustomerName" },
-                    { "data": "Status" },
-                    { "data": "Priority" },
-                    { "data": "AssignedTechnician" },
-                    { "data": "Actions" }
-                ],
-                aoColumnDefs: [
-                    {
-                        "render": function (data, type, row) {
-                            return "<span class='priority-color-mark' style='background-color: " + row.PriorityColor + "' ></span>" + data;
-                        },
-                        "targets": 3
-                    },
-                    {
-                        bSortable: false,
-                        sDefaultContent: $("#tickets-list-page-actions-column-template").html(),
-                        aTargets: [-1]
-                    }
-                ],
-                order: [
-                    [0, "asc"]
-                ]
-            });
-
-            */
-
-
-
-            //  $(".test-table").dataTable();
+            this.load();
+        },
+        methods: {
+            editItem(item) {
+                console.log("edit");
+            },
+            deleteItem(item) {
+                console.log("delete");
+            },
+            load() {
+                this.$http.post("/Users/All")
+                    .then(this.loadCompleted);
+            },
+            loadCompleted(result) {
+                this.items = result.body;
+            }
         }
     }
 </script>

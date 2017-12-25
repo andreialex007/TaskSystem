@@ -105,10 +105,12 @@ body {
     text-transform: capitalize;
 }
 
-.data-table-template {
-    display: none;
-}
-
 .data-table-template table {
     table-layout: fixed;
 }
+
+.data-table-template td,
+.data-table-template th {
+    vertical-align: middle;
+}
+

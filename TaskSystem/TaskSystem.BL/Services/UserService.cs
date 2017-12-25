@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TaskSystem.BL.Common;
 using TaskSystem.BL.Exceptions;
 using TaskSystem.BL.Extensions;
@@ -31,7 +32,22 @@ namespace TaskSystem.BL.Services
 
         public User Login(string email, string password)
         {
-           return Login(new UserItem { Email = email, Password = password });
+            return Login(new UserItem { Email = email, Password = password });
         }
+
+        public List<UserItem> All()
+        {
+            return Db.Users.Select(x => new UserItem
+            {
+                Id = x.Id,
+                Email = x.Email,
+                Password = x.Password,
+                LastName = x.LastName,
+                Role = x.Role,
+                FirstName = x.FirstName,
+                Phone = x.Phone,
+            }).ToList();
+        }
+
     }
 }

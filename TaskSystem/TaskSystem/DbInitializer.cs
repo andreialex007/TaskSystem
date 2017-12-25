@@ -24,7 +24,17 @@ namespace TaskSystem
                 Password = Hasher.HashPassword("123456i")
             };
 
+            var tech = new User
+            {
+                FirstName = "Technician",
+                LastName = "Technician",
+                Email = "Technician@Technician.com",
+                Role = 1,
+                Password = Hasher.HashPassword("123456i")
+            };
+
             db.Users.Add(admin);
+            db.Users.Add(tech);
             db.SaveChanges();
         }
     }
