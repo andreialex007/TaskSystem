@@ -45,6 +45,7 @@
                 </div>
             </data-table>
 
+            
 
         </div>
     </main-layout>
@@ -54,6 +55,7 @@
 <script>
     import mainLayout from "./../layout/MainLayout.vue";
     import dataTable from "./../common/DataTable.vue"
+    
 
     export default {
         components: {
@@ -77,6 +79,13 @@
             };
         },
         mounted() {
+
+            let isSaved = Cookies.get('isSaved');
+            if (!!isSaved) {
+                toastr.info(isSaved, "Success");
+                Cookies.remove('isSaved');
+            }
+
             this.load();
         },
         methods: {
@@ -90,6 +99,7 @@
                 this.$router.push({ name: "addUser" })
             },
             load() {
+                debugger;
                 this.$http.post("/Users/All")
                     .then(this.loadCompleted);
             },

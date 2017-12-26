@@ -91,7 +91,7 @@ namespace TaskSystem.BL.Services
             user.FirstName = item.FirstName;
             user.LastName = item.LastName;
             user.Phone = item.Phone;
-            user.Role = item.Role;
+            user.Role = item.Role ?? 0;
 
             Db.SaveChanges();
 

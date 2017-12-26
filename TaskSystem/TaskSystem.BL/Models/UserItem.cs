@@ -25,9 +25,9 @@ namespace TaskSystem.BL.Models
         public string Password { get; set; }
 
         [Required]
-        public int Role { get; set; }
+        public int? Role { get; set; }
 
-        public string RoleName => Role == 0 ? string.Empty : Role.CastTo<RoleEnum>().DescriptionAttr();
+        public string RoleName => Role == null ? string.Empty : Role.CastTo<RoleEnum>().DescriptionAttr();
 
         public Dictionary<int, string> AvaliableRoles => EnumUtil.ToDictionary<RoleEnum>();
     }

@@ -115,6 +115,7 @@
 
                 this.$http.post("/users/save", this.user)
                     .then(function (response) {
+                        Cookies.set('isSaved', `User #${response.body.id} Saved`, { expires: 7, path: '/' });
                         this.$router.push({ path: `/users` });
                     })
                     .catch(x => {
