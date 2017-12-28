@@ -59,6 +59,7 @@
                     JSON.stringify({ Username: this.email, Password: this.password }))
                     .then(x => {
                         localStorage.authToken = x.body.token;
+                        localStorage.userName = x.body.userName;
                         this.$router.push({ path: '/' })
                     })
                     .catch(x => {

@@ -22,7 +22,7 @@
                             aria-haspopup="true"
                             aria-expanded="false">
                         <i class="fa fa-user"></i>
-                        <span>Admin</span>
+                        <span>{{ userName }}</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
@@ -78,6 +78,9 @@
                     routesToDraw.push(clone);
                 }
                 return routesToDraw;
+            },
+            userName() {
+                return localStorage.userName;
             }
         },
         mounted() {

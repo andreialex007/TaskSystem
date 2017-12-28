@@ -10,6 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "block-ui": "^2.70.1",
     "datatables.net": "^1.10.16",
     "datatables.net-bs4": "^1.10.16",
     "jquery": "^3.2.1",

@@ -81,11 +81,13 @@ namespace TaskSystem.BL.Services
             if (item.Id == 0)
             {
                 user = Db.CreateAndAdd<User>();
-                user.Password = item.Password;
+                user.Password = Hasher.HashPassword(item.Password);
             }
             else
             {
                 user = Db.Users.Single(x => x.Id == item.Id);
+                if (item.Password.IsNotEmptyOrWhiteSpace())
+                    user.Password = Hasher.HashPassword(item.Password);
             }
             user.Email = item.Email;
             user.FirstName = item.FirstName;

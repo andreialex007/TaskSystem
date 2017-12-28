@@ -26,6 +26,7 @@ var dt = require('datatables.net-bs4');
 window.$.DataTable = dt;
 
 window.moment = require('./assets/scripts/moment');
+window.blockUI = require('block-ui');
 require('./assets/bootstrap/js/bootstrap.bundle');
 window.Cookies = require('./assets/scripts/js.cookie');
 

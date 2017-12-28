@@ -30,16 +30,17 @@
         },
         methods: {
             initTable() {
+                let component = this;
+                if (component.table) {
+                    component.table.fnDestroy();
+                    component.table = null;
+                }
                 setTimeout(() => {
-                    if (this.table) {
-                        this.table.fnDestroy();
-                        this.table = null;
-                    }
-                    this.table = $(this.$el).find("table").dataTable(this.options || {});
-                    this.table.on('draw', function () {
+                    component.table = $(this.$el).find("table").dataTable(this.options || {});
+                    component.table.on('draw', function () {
                         console.log("table-has-been-drawn");
                     });
-                },10);
+                },1);
             }
         }
     }

@@ -1,21 +1,24 @@
 <template>
-    <div v-show="visible" class="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <template v-if="!!title">
-                        <h5 class="modal-title">{{ title }}</h5>
-                    </template>
-                    <button v-on:click="hide()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <slot></slot>
-                </div>
-                <div class="modal-footer">
-                    <button v-on:click="ok()" class="btn btn-primary">{{ saveText }}</button>
-                    <button v-on:click="cancel()" class="btn btn-secondary" data-dismiss="modal">{{ cancelText }}</button>
+    <div>
+        <div v-show="visible" class="modal-overlay" ></div>
+        <div v-show="visible" class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <template v-if="!!title">
+                            <h5 class="modal-title">{{ title }}</h5>
+                        </template>
+                        <button v-on:click="hide()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <slot></slot>
+                    </div>
+                    <div class="modal-footer">
+                        <a v-on:click="ok()" href="javascript:;" class="btn btn-primary">{{ saveText }}</a>
+                        <a v-on:click="cancel()" href="javascript:;"  class="btn btn-secondary" data-dismiss="modal">{{ cancelText }}</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,9 +35,7 @@
         props: {
             title: { type: String },
             saveText: { type: String, default: "Ok" },
-            cancelText: { type: String, default: "Cancel" },
-            okFunc: { type: Function },
-            cancelFunc: { type: Function }
+            cancelText: { type: String, default: "Cancel" }
         },
         data() {
             return {
@@ -47,12 +48,12 @@
         methods: {
             ok() {
                 if (this.okFunc)
-                    okFunc();
+                    this.okFunc();
                 this.hide();
             },
             cancel() {
                 if (this.cancelFunc)
-                    cancelFunc();
+                    this.cancelFunc();
                 this.hide();
             }
         }

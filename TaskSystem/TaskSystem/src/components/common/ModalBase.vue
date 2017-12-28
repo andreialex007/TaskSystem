@@ -5,7 +5,9 @@
         },
         data() {
             return {
-                visible: true
+                visible: false,
+                okFunc: null,
+                cancelFunc: null
             }
         },
         mounted() {
@@ -13,9 +15,12 @@
         },
         methods: {
             hide() {
+                console.log("hide");
                 this.visible = false;
             },
-            show() {
+            show(okFunc, cancelFunc) {
+                this.okFunc = okFunc;
+                this.cancelFunc = cancelFunc;
                 this.visible = true;
             },
         }

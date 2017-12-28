@@ -31,12 +31,19 @@ namespace TaskSystem.Controllers
         {
             var user = Service.User.Login(request.Username, request.Password);
             var generatedToken = GeneratedToken(user);
-            return Ok(new { token = generatedToken });
+            return Ok(new
+            {
+                token = generatedToken,
+                userName = user.FirstName
+            });
         }
 
         private string GeneratedToken(User user)
         {
-            var claims = new [] { new Claim(ClaimTypes.Name, user.Email) };
+            var claims = new []
+            {
+                new Claim(ClaimTypes.Name, user.Email)
+            };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration ["SecurityKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
