@@ -9,10 +9,16 @@
 
 <script>
     import mainLayout from "./../layout/MainLayout.vue"
+    import dataTable from "./../common/DataTable.vue"
+    import confirmModal from "./../common/ConfirmModal.vue"
+    import pageBase from "./../common/PageBase.vue"
 
     export default {
+        extends: pageBase,
         components: {
-            mainLayout
+            mainLayout,
+            dataTable,
+            confirmModal
         }
     }
 </script>
