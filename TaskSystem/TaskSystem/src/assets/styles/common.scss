@@ -107,10 +107,9 @@ body {
 
 .data-table-template table {
     table-layout: fixed;
-    
 }
 
-.data-table-template td{
+.data-table-template td {
     word-break: break-all;
 }
 
@@ -277,4 +276,9 @@ UI Loading
 .block-spinner-bar .bounce2 {
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
+}
+
+
+.actions-slot {
+    display: none;
 }

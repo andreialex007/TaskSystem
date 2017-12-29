@@ -23,6 +23,8 @@ const router = new VueRouter({
 		...mainRoutes,
 		{ path: "/users/add", component: editUser, name: "addUser", exact: false },
 		{ path: "/users/:id", component: editUser, name: "editUser", exact: false },
+		{ path: "/customers/add", component: editUser, name: "addCustomer", exact: false },
+		{ path: "/customers/:id", component: editUser, name: "editCustomer", exact: false },
 		{ path: '*', component: notFound }
 	],
 	mode: "history"

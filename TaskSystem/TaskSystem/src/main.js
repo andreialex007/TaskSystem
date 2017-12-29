@@ -10,7 +10,7 @@ Vue.use(Vuex);
 
 //styles
 import fontAwesome from './assets/font-awesome-4.7.0/css/font-awesome.css'
-import bootstrap from './assets/bootstrap/css/bootstrap.css'
+import bootstrap from './assets/bootstrap/scss/bootstrap.scss'
 import commonStyles from './assets/styles/common.scss'
 import bootstrap4Datatables from './assets/styles/datatables.css'
 import toastr from './assets/styles/toastr.scss'
@@ -40,6 +40,15 @@ window.isUserLoggedIn = function () {
 
 window.appRoot = "http://localhost:12395/api";
 Vue.http.options.responseType = "json";
+
+$.ajaxSetup({
+  headers: {
+    Accept: 'application/json'
+  },
+  beforeSend: function (xhr, settings) {
+    xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
+  }
+});
 
 Vue.http.interceptors.push((request, next) => {
   request.url = window.appRoot + request.url;
