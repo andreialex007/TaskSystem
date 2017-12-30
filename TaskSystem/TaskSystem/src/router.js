@@ -4,6 +4,7 @@ import tasks from "./components/tasks/TasksPage.vue"
 import users from "./components/users/UsersPage.vue"
 import editUser from "./components/users/EditUserPage.vue"
 import invoices from "./components/invoices/InvoicesPage.vue"
+import editCustomer from "./components/customers/EditCustomerPage.vue"
 import customers from "./components/customers/CustomersPage.vue"
 import notFound from "./components/not-found/NotFoundPage.vue"
 import VueRouter from "vue-router"
@@ -23,8 +24,8 @@ const router = new VueRouter({
 		...mainRoutes,
 		{ path: "/users/add", component: editUser, name: "addUser", exact: false },
 		{ path: "/users/:id", component: editUser, name: "editUser", exact: false },
-		{ path: "/customers/add", component: editUser, name: "addCustomer", exact: false },
-		{ path: "/customers/:id", component: editUser, name: "editCustomer", exact: false },
+		{ path: "/customers/add", component: editCustomer, name: "addCustomer", exact: false },
+		{ path: "/customers/:id", component: editCustomer, name: "editCustomer", exact: false },
 		{ path: '*', component: notFound }
 	],
 	mode: "history"

@@ -50,7 +50,11 @@
             ajaxDataTable
         },
         mounted() {
-
+            let isSaved = Cookies.get('isSaved');
+            if (!!isSaved) {
+                toastr.info(isSaved, "Success");
+                Cookies.remove('isSaved');
+            }
         },
         data() {
             return {

@@ -128,16 +128,16 @@ body {
     margin-bottom: 0px;
 }
 
-.modal-dialog {
+.confirm-modal .modal-dialog {
     opacity: 1 !important;
 }
 
-.modal {
+.confirm-modal .modal {
     display: inline-block;
     z-index: 99999;
 }
 
-.modal-overlay {
+.confirm-modal .modal-overlay {
     position: fixed;
     top: 0px;
     left: 0px;

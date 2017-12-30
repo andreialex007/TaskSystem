@@ -8,12 +8,19 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Vuex);
 
+import googleAutocomplete from "./components/common/GoogleAutocomplete.vue"
+import summerNote from "./components/common/SummerNote.vue"
+Vue.component('google-autocomplete', googleAutocomplete);
+Vue.component('summer-note', summerNote);
+
+
 //styles
 import fontAwesome from './assets/font-awesome-4.7.0/css/font-awesome.css'
 import bootstrap from './assets/bootstrap/scss/bootstrap.scss'
 import commonStyles from './assets/styles/common.scss'
 import bootstrap4Datatables from './assets/styles/datatables.css'
 import toastr from './assets/styles/toastr.scss'
+import summernote from './assets/summernote/summernote-bs4.css'
 
 //scripts
 window.$ = require('jquery');
@@ -28,6 +35,9 @@ window.$.DataTable = dt;
 window.moment = require('./assets/scripts/moment');
 window.blockUI = require('block-ui');
 require('./assets/bootstrap/js/bootstrap.bundle');
+
+window.CodeMirror = false;
+require('./assets/summernote/summernote-bs4');
 window.Cookies = require('./assets/scripts/js.cookie');
 
 import router from "./router"

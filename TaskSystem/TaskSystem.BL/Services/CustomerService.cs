@@ -3,6 +3,7 @@ using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
+using TaskSystem.DL.Entities.Customers;
 
 namespace TaskSystem.BL.Services
 {
@@ -44,5 +45,55 @@ namespace TaskSystem.BL.Services
             return model;
         }
 
+
+        public CustomerItem Edit(int? id = null)
+        {
+            var customer = !id.HasValue
+                ? new CustomerItem()
+                : Db.Customers
+                    .Select(x => new CustomerItem
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Phone = x.Phone,
+                        Address = x.Address,
+                        Notes = x.Notes,
+                        Users = x.CustomerUsers
+                            .Select(u => new CustomerUserItem
+                            {
+                                Id = u.Id,
+                                Email = u.Email,
+                                Phone = u.Phone,
+                                Name = u.Name,
+                                Title = u.Title
+                            })
+                            .ToList()
+                    })
+                    .Single(x => x.Id == id);
+
+            return customer;
+        }
+
+
+        public void Save(CustomerItem item)
+        {
+            item.GetValidationErrors().ThrowIfHasErrors();
+
+            var customer = item.Id == 0 ? Db.CreateAndAdd<Customer>() : Db.Customers.Single(x => x.Id == item.Id);
+
+            customer.Address = item.Address;
+            customer.Name = item.Name;
+            customer.Notes = item.Notes;
+            customer.Phone = item.Phone;
+
+            Db.SaveChanges();
+            item.Id = customer.Id;
+        }
+
+
+        public void Delete(int id)
+        {
+            Db.DeleteById<Customer>(id);
+        }
     }
 }
