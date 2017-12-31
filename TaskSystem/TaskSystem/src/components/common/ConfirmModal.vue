@@ -1,5 +1,5 @@
 <template>
-    <div class="confirm-modal">
+    <div class="confirm-modal common-modal">
         <div v-show="visible" class="modal-overlay" ></div>
         <div v-show="visible" class="modal">
             <div class="modal-dialog" role="document">

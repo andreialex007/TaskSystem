@@ -46,6 +46,13 @@ namespace TaskSystem.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("savecustomeruser")]
+        public IActionResult SaveCustomerUser(CustomerUserItem item)
+        {
+            return null;
+        }
+
 
 
     }

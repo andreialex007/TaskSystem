@@ -57,23 +57,81 @@
                     </span>
                 </div>
             </form>
+            <div v-show="customer.id > 0">
+                <h3>Customer Users</h3>
+                <data-table v-bind:items="customer.users" v-bind:options="tableOptions">
+                    <div class="data-table-template">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in customer.users">
+                                    <th>{{ item.id }}</th>
+                                    <th>{{ item.name }}</th>
+                                    <th>{{ item.title }}</th>
+                                    <th>{{ item.phone }}</th>
+                                    <th>{{ item.email }}</th>
+                                    <th>
+                                        <a title="edit" v-on:click="editItem(item)" class="edit btn btn-primary btn-sm" href="javascript:;">
+                                            <i class="fa fa-edit"></i>
+                                            Edit
+                                        </a>
+                                        <a title="edit" v-on:click="deleteItem(item)" class="edit btn btn-danger btn-sm" href="javascript:;">
+                                            <i class="fa fa-times"></i>
+                                            Delete
+                                        </a>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </data-table>
+            </div>
         </div>
+        <customer-user-modal ref="editCustomerUserModal" v-bind:model="currentCustomerUser"></customer-user-modal>
     </main-layout>
 </template>
 
 
 <script>
     import mainLayout from "./../layout/MainLayout.vue";
+    import dataTable from "./../common/DataTable.vue"
+    import confirmModal from "./../common/ConfirmModal.vue"
+    import pageBase from "./../common/PageBase.vue"
+    import customerUserModal from "./../customers/EditCustomerUserModal.vue"
 
     export default {
+        extends: pageBase,
         components: {
-            mainLayout
+            mainLayout,
+            dataTable,
+            confirmModal,
+            customerUserModal
         },
         data() {
             return {
                 customer: {},
                 errors: [],
-                testValue: "testsuper"
+                tableOptions: {
+                    "aoColumnDefs": [
+                        {
+                            bSortable: false,
+                            aTargets: [-1]
+                        }
+                    ],
+                    order: [
+                        [0, "asc"]
+                    ]
+                },
+                currentCustomerUser: {}
             };
         },
         watch: {
@@ -83,6 +141,13 @@
             this.load();
         },
         methods: {
+            editItem(item) {
+                this.currentCustomerUser = item;
+                this.$refs.editCustomerUserModal.show();
+            },
+            deleteItem(item) {
+                console.log("delete customer user");
+            },
             load() {
                 this.$http.post(`/customers/edit/${this.$route.params.id}`)
                     .then(this.loadCompleted);

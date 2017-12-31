@@ -3,14 +3,11 @@
 }
 
 body {
-    padding-top: 54px;
+    min-height: 100%;
     height: 100%;
 }
 
 @media (min-width: 992px) {
-    body {
-        padding-top: 56px;
-    }
 }
 
 
@@ -43,6 +40,11 @@ body {
     font-size: 14px;
     padding-top: 5px;
     padding-bottom: 5px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+
 
     .info {
         float: right;
@@ -128,16 +130,16 @@ body {
     margin-bottom: 0px;
 }
 
-.confirm-modal .modal-dialog {
+.common-modal .modal-dialog {
     opacity: 1 !important;
 }
 
-.confirm-modal .modal {
+.common-modal .modal {
     display: inline-block;
     z-index: 99999;
 }
 
-.confirm-modal .modal-overlay {
+.common-modal .modal-overlay {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -281,4 +283,55 @@ UI Loading
 
 .actions-slot {
     display: none;
+}
+
+#app {
+    position: relative;
+    padding-bottom: 50px;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 0px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.root > .container-fluid {
+    padding-top: 43px;
+}
+
+.container-fluid {
+    width: auto;
+    padding: 0 15px;
+}
+
+.root {
+    position: relative;
+    min-height: 100%;
+    display: inline-block;
+}
+
+.dataTables_wrapper {
+    padding-right: 0px;
+    padding-left: 0px;
 }

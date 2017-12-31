@@ -1,11 +1,9 @@
 <template>
-    <div class="fill-remaining-height" id="app">
-        <app-header></app-header>
-        <!-- Page Content -->
-        <div class="container-fluid fill-remaining-height">
+    <div class="root" >
+        <main role="main" class="container-fluid">
+            <app-header></app-header>
             <slot></slot>
-        </div>
-
+        </main>
         <app-footer></app-footer>
     </div>
 </template>

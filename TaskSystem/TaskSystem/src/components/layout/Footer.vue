@@ -1,7 +1,9 @@
 <template>
-    <div class="app-footer">
-        <span class="info">&#169; Task system {{ year }}</span>
-    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <span class="info pull-right">&#169; Task system {{ year }}</span>
+        </div>
+    </footer>
 </template>
 
 <script>
