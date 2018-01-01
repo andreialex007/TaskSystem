@@ -12,8 +12,8 @@ import VueRouter from "vue-router"
 window.mainRoutes = [
 	{ path: "/", component: dashboard, name: "home", exact: true },
 	{ path: "/tasks", component: tasks, name: "tasks", exact: false },
-	{ path: "/customers", component: customers, name: "customers", exact: false },
 	{ path: "/invoices", component: invoices, name: "invoices", exact: false },
+	{ path: "/customers", component: customers, name: "customers", exact: false },
 	{ path: "/users", component: users, name: "users", exact: false }
 	
 ];

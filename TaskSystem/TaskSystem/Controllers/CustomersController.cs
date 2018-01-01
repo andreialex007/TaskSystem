@@ -20,14 +20,12 @@ namespace TaskSystem.Controllers
             return Ok(model);
         }
 
-
-
         [HttpPost]
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id = null)
         {
-            var users = Service.Customer.Edit(id);
-            return Ok(users);
+            var item = Service.Customer.Edit(id);
+            return Ok(item);
         }
 
         [HttpPost]
@@ -48,12 +46,26 @@ namespace TaskSystem.Controllers
 
         [HttpPost]
         [Route("savecustomeruser")]
-        public IActionResult SaveCustomerUser(CustomerUserItem item)
+        public IActionResult SaveCustomerUser([FromBody] CustomerUserItem item)
         {
-            return null;
+            Service.CustomerUser.Save(item);
+            return Ok(item);
         }
 
+        [HttpPost]
+        [Route("editcustomeruser/{id?}")]
+        public IActionResult EditCustomerUser(int? id = null)
+        {
+            var item = Service.CustomerUser.Edit(id);
+            return Ok(item);
+        }
 
-
+        [HttpPost]
+        [Route("deletecustomeruser/{id?}")]
+        public IActionResult DeleteCustomerUser(int id)
+        {
+            Service.CustomerUser.Delete(id);
+            return Ok();
+        }
     }
 }

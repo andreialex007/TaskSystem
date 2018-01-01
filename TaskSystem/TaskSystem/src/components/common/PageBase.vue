@@ -1,5 +1,8 @@
 <script>
     export default {
+        data() {
+            return { errors: [] };
+        },
         methods: {
             blockUI: function (options) {
                 options = $.extend(true, {}, options);

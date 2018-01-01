@@ -1,16 +1,27 @@
 <template>
     <div class="edit-customer-user-modal common-modal">
-        <div v-show="visible" class="modal-overlay" ></div>
+        <div v-show="visible" class="modal-overlay"></div>
         <div v-show="visible" class="modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit customer user <span class="badge badge-danger" >#{{ model.id }}</span></h5>
+                        <h5 class="modal-title">
+                        <span v-show="entityId > 0" >Edit</span>
+                        <span v-show="!entityId" >Create</span>
+                        customer user <span  v-show="!!entityId" class="badge badge-danger">#{{ entityId }}</span></h5>
                         <button v-on:click="cancel()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div v-show="errors.length > 0" class="alert alert-danger" role="alert">
+                            <strong>Errors found!</strong>
+                            <ul>
+                                <li v-for="item in errors">
+                                    {{ item.errorMessage }}
+                                </li>
+                            </ul>
+                        </div>
                         <div class="row form-group">
                             <div class="col-md-12">
                                 <label>Title</label>
@@ -38,7 +49,7 @@
                     </div>
                     <div class="modal-footer">
                         <a v-on:click="ok()" href="javascript:;" class="btn btn-primary">Save customer</a>
-                        <a v-on:click="cancel()" href="javascript:;"  class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                        <a v-on:click="cancel()" href="javascript:;" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -50,25 +61,52 @@
 <script>
 
     import modalBase from "./../common/ModalBase.vue"
+    import pageBase from "./../common/PageBase.vue"
 
     export default {
         extends: modalBase,
+        mixins: [pageBase],
         props: {
-            model: { type: Object }
+            entityId: { type: Number },
+            customerId: {  },
         },
-        data() {
-            return {
-
+        watch: {
+            visible(newVal) {
+                if (newVal == false)
+                    this.model = {};
+                if (newVal == true)
+                    this.load();
             }
         },
-        mounted() {
-
-        },
+        data: () => ({
+            model: {}
+        }),
         methods: {
+            load(id) {
+                this.blockUI({
+                    message: 'Please wait...'
+                });
+                // debugger;
+                this.$http.post(`/customers/editcustomeruser/${this.entityId}`)
+                    .then(this.loadCompleted);
+            },
+            loadCompleted(result) {
+                this.model = result.body;
+                this.unblockUI();
+            },
             ok() {
-                if (this.okFunc)
-                    this.okFunc();
-                this.hide();
+                let component = this;
+                this.model.customerId = this.customerId;
+                this.$http.post(`/customers/savecustomeruser`,
+                    this.model)
+                    .then((x) => {
+                        toastr.info("Customer user saved", "Success");
+                        component.okFunc(x.body);
+                        component.hide();
+                    }).catch(x => {
+                        debugger;
+                        component.errors = x.body.errors;
+                    });
             },
             cancel() {
                 if (this.cancelFunc)

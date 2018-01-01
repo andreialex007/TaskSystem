@@ -1,6 +1,6 @@
 <template>
     <div>
-        <slot ></slot>
+        <slot></slot>
     </div>
 </template>
 
@@ -18,11 +18,14 @@
             }
         },
         mounted() {
-            
+
         },
         watch: {
-            items() {
-                this.initTable();
+            items: {
+                handler() {
+                    this.initTable();
+                },
+                deep: true
             },
             options() {
                 this.initTable();
@@ -40,7 +43,7 @@
                     component.table.on('draw', function () {
                         console.log("table-has-been-drawn");
                     });
-                },1);
+                }, 1);
             }
         }
     }

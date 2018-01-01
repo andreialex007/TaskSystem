@@ -58,7 +58,7 @@
                 </div>
             </form>
             <div v-show="customer.id > 0">
-                <h3>Customer Users</h3>
+                <h3>Customer Users <a href="javascript:;" v-on:click="editItem(null)" class="btn btn-sm btn-primary">Add New</a></h3>
                 <data-table v-bind:items="customer.users" v-bind:options="tableOptions">
                     <div class="data-table-template">
                         <table class="table table-bordered table-striped">
@@ -80,7 +80,7 @@
                                     <th>{{ item.phone }}</th>
                                     <th>{{ item.email }}</th>
                                     <th>
-                                        <a title="edit" v-on:click="editItem(item)" class="edit btn btn-primary btn-sm" href="javascript:;">
+                                        <a title="edit" v-on:click="editItem(item.id)" class="edit btn btn-primary btn-sm" href="javascript:;">
                                             <i class="fa fa-edit"></i>
                                             Edit
                                         </a>
@@ -96,7 +96,12 @@
                 </data-table>
             </div>
         </div>
-        <customer-user-modal ref="editCustomerUserModal" v-bind:model="currentCustomerUser"></customer-user-modal>
+        <customer-user-modal ref="editCustomerUserModal"
+                             v-bind:customerId="$route.params.id"
+                             v-bind:entityId="editedCustomerUserId"></customer-user-modal>
+        <confirm-modal ref="confirmModal" title="Are you sure?">
+            <span>Are you really want to delete this customer user?</span>
+        </confirm-modal>
     </main-layout>
 </template>
 
@@ -131,7 +136,7 @@
                         [0, "asc"]
                     ]
                 },
-                currentCustomerUser: {}
+                editedCustomerUserId: 0
             };
         },
         watch: {
@@ -141,12 +146,37 @@
             this.load();
         },
         methods: {
-            editItem(item) {
-                this.currentCustomerUser = item;
-                this.$refs.editCustomerUserModal.show();
+            editItem(id) {
+                this.editedCustomerUserId = id;
+                this.$refs.editCustomerUserModal.show(this.customerUserSavedFunc);
+            },
+            customerUserSavedFunc(x) {
+                let index = this.customer.users.map(x => x.id).findIndex(u => u == x.id);
+                if (index === -1) {
+                    this.customer.users.push(x);
+                } else {
+                    this.customer.users[index] = x;
+                }
+                this.$forceUpdate();
             },
             deleteItem(item) {
-                console.log("delete customer user");
+                let component = this;
+                this.$refs.confirmModal.show(function () {
+                    console.log("delete");
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/customers/deletecustomeruser/" + item.id)
+                        .then(function () {
+                            component.deleteItemCompleted(item.id)
+                        })
+                });
+            },
+            deleteItemCompleted(id) {
+                this.customer.users.filter(x => x.id != id);
+                this.$forceUpdate();
+                this.unblockUI();
+                toastr.info("User deleted", "Success");
             },
             load() {
                 this.$http.post(`/customers/edit/${this.$route.params.id}`)

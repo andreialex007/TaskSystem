@@ -2,13 +2,13 @@
     <main-layout>
         <div class="col-lg-12">
             <h1 class="mt-5">
-                <template v-if="!$route.params.id" >
+                <template v-if="!$route.params.id">
                     Create
                 </template>
                 <template v-if="!!$route.params.id">
                     <span class="badge badge-success">#{{$route.params.id}}</span>    Edit
 
-                    
+
                 </template>
                 User
 
@@ -82,8 +82,10 @@
 
 <script>
     import mainLayout from "./../layout/MainLayout.vue";
+    import pageBase from "./../common/PageBase.vue"
 
     export default {
+        extends: pageBase,
         components: {
             mainLayout
         },
@@ -91,8 +93,7 @@
             return {
                 user: {
 
-                },
-                errors: []
+                }
             };
         },
         mounted() {
