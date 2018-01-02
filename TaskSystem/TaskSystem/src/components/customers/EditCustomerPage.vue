@@ -110,11 +110,11 @@
     import mainLayout from "./../layout/MainLayout.vue";
     import dataTable from "./../common/DataTable.vue"
     import confirmModal from "./../common/ConfirmModal.vue"
-    import pageBase from "./../common/PageBase.vue"
+    import uiBase from "./../common/UiBase.vue"
     import customerUserModal from "./../customers/EditCustomerUserModal.vue"
 
     export default {
-        extends: pageBase,
+        extends: uiBase,
         components: {
             mainLayout,
             dataTable,

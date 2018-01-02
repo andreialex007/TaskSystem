@@ -82,10 +82,10 @@
 
 <script>
     import mainLayout from "./../layout/MainLayout.vue";
-    import pageBase from "./../common/PageBase.vue"
+    import uiBase from "./../common/UiBase.vue"
 
     export default {
-        extends: pageBase,
+        extends: uiBase,
         components: {
             mainLayout
         },

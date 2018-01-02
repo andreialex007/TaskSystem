@@ -59,13 +59,10 @@
 
 
 <script>
-
     import modalBase from "./../common/ModalBase.vue"
-    import pageBase from "./../common/PageBase.vue"
-
+    
     export default {
         extends: modalBase,
-        mixins: [pageBase],
         props: {
             entityId: { type: Number },
             customerId: {  },

@@ -58,11 +58,10 @@
     import mainLayout from "./../layout/MainLayout.vue";
     import dataTable from "./../common/DataTable.vue"
     import confirmModal from "./../common/ConfirmModal.vue"
-    import pageBase from "./../common/PageBase.vue"
-
-
+    import uiBase from "./../common/UiBase.vue"
+    
     export default {
-        extends: pageBase,
+        extends: uiBase,
         components: {
             mainLayout,
             dataTable,
@@ -85,13 +84,7 @@
             };
         },
         mounted() {
-
-            let isSaved = Cookies.get('isSaved');
-            if (!!isSaved) {
-                toastr.info(isSaved, "Success");
-                Cookies.remove('isSaved');
-            }
-
+            this.checkSaved();
             this.load();
         },
         methods: {

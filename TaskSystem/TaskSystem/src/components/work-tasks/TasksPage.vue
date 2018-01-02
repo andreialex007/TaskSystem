@@ -2,10 +2,10 @@
     <main-layout>
         <div class="col-lg-12">
             <h1 class="mt-5">
-                Customers
+                Work tasks
                 <span v-on:click="add()" class="btn btn-success pull-right">
-                    <i class="fa fa-plus" ></i>
-                    Add customer
+                    <i class="fa fa-plus"></i>
+                    Add work task
                 </span>
             </h1>
 
@@ -15,9 +15,9 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>Id</th>
-                                <th>Customer Name</th>
-                                <th>Address</th>
-                                <th>Phone</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Priority</th>
                                 <th class="actions">Actions</th>
                             </tr>
                         </thead>
@@ -38,7 +38,6 @@
         </div>
     </main-layout>
 </template>
-
 
 <script>
     import mainLayout from "./../layout/MainLayout.vue"
@@ -61,7 +60,7 @@
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
-                        "url": window.appRoot + "/Customers/Search",
+                        "url": window.appRoot + "/WorkTasks/Search",
                         "type": "POST",
                         data: function (data) {
                             let order = data.order[0];
@@ -76,8 +75,8 @@
                     "columns": [
                         { "data": "id" },
                         { "data": "name" },
-                        { "data": "address" },
-                        { "data": "phone" },
+                        { "data": "status" },
+                        { "data": "priority" },
                         { "data": "Actions" }
                     ],
                     aoColumnDefs: [
@@ -99,10 +98,10 @@
                 }
             },
             edit(data) {
-                this.$router.push({ path: "/customers/" + data.id })
+                this.$router.push({ path: "/WorkTasks/" + data.id })
             },
             add() {
-
+                this.$router.push({ path: "/worktasks/add" })
             }
         }
     }

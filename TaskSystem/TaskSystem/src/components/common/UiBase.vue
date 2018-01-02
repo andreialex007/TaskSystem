@@ -3,7 +3,17 @@
         data() {
             return { errors: [] };
         },
+        mounted() {
+            this.checkSaved();
+        },
         methods: {
+            checkSaved() {
+                let isSaved = Cookies.get('isSaved');
+                if (!!isSaved) {
+                    toastr.info(isSaved, "Success");
+                    Cookies.remove('isSaved');
+                }
+            },
             blockUI: function (options) {
                 options = $.extend(true, {}, options);
                 var html = '';

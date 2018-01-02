@@ -1,5 +1,9 @@
 <script>
+
+    import pageBase from "./../common/UiBase.vue"
+
     export default {
+        extends: pageBase,
         props: {
             title: { type: String }
         },
