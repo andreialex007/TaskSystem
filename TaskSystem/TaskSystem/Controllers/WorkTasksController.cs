@@ -69,6 +69,14 @@ namespace TaskSystem.Controllers
         }
 
         [HttpPost]
+        [Route("AddNote")]
+        public IActionResult AddNote([FromBody] WorkTaskNoteItem item)
+        {
+            Service.Note.AddNote(item.Note, item.WorkTaskId);
+            return Ok(item);
+        }
+
+        [HttpPost]
         [Route("delete/{id?}")]
         public IActionResult Delete(int id)
         {

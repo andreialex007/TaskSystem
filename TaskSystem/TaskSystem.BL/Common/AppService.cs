@@ -11,11 +11,13 @@ namespace TaskSystem.BL.Common
             Customer = new CustomerService(db);
             CustomerUser = new CustomerUserService(db);
             WorkTask = new WorkTaskService(db);
+            Note = new NoteService(db);
         }
 
         public UserService User { get; set; }
         public CustomerService Customer { get; set; }
         public CustomerUserService CustomerUser { get; set; }
         public WorkTaskService WorkTask { get; set; }
+        public NoteService Note { get; set; }
     }
 }

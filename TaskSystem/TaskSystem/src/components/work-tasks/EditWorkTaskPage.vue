@@ -85,7 +85,7 @@
 
                 <div class="sub-entities">
                     <!-- Nav tabs -->
-                    <ul class="nav nav-pills" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Notes</a>
                         </li>
@@ -96,7 +96,16 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active" id="home" role="tabpanel">notes content</div>
+                        <div class="tab-pane active" id="home" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    <summer-note v-bind:value.sync="newNoteText"></summer-note>
+                                    <br />
+                                    <a class="pull-right btn btn-primary" href="javascriptp:;">Add Note</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane" id="profile" role="tabpanel">documents list</div>
                     </div>
                 </div>
@@ -118,6 +127,7 @@
         },
         data() {
             return {
+                newNoteText: "",
                 task: {
 
                 }

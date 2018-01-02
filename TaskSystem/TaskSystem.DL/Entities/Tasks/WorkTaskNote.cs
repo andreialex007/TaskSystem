@@ -11,6 +11,9 @@ namespace TaskSystem.DL.Entities.Tasks
         public int UserId { get; set; }
         public User User { get; set; }
 
+        public int? WorkTaskId { get; set; }
+        public WorkTask WorkTask { get; set; }
+
         public DateTime DateAdded { get; set; }
     }
 }
