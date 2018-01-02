@@ -10,17 +10,23 @@ Vue.use(Vuex);
 
 import googleAutocomplete from "./components/common/GoogleAutocomplete.vue"
 import summerNote from "./components/common/SummerNote.vue"
+import select2 from "./components/common/Select2.vue"
 Vue.component('google-autocomplete', googleAutocomplete);
 Vue.component('summer-note', summerNote);
+Vue.component('select2', select2);
 
 
 //styles
 import fontAwesome from './assets/font-awesome-4.7.0/css/font-awesome.css'
+import lineAwesome from './assets/line-awesome/css/line-awesome.css'
 import bootstrap from './assets/bootstrap/scss/bootstrap.scss'
-import commonStyles from './assets/styles/common.scss'
+
+import select2Css from './assets/styles/select2.css'
+
 import bootstrap4Datatables from './assets/styles/datatables.css'
 import toastr from './assets/styles/toastr.scss'
 import summernote from './assets/summernote/summernote-bs4.css'
+import commonStyles from './assets/styles/common.scss'
 
 //scripts
 window.$ = require('jquery');
@@ -31,6 +37,8 @@ window.toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 
 var dt = require('datatables.net-bs4');
 window.$.DataTable = dt;
+window.$.select2 = require('select2');
+// $.fn.select2.defaults.set("theme", "bootstrap4");
 
 window.moment = require('./assets/scripts/moment');
 window.blockUI = require('block-ui');

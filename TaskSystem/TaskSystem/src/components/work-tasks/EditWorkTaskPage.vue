@@ -53,9 +53,7 @@
                 <div class="row form-group">
                     <div class="col-md-4">
                         <label>Customer</label>
-                        <select class="form-control" >
-                            <option value="" >Please select item</option>
-                        </select>
+                        <select2></select2>
                     </div>
                     <div class="col-md-4">
                         <label>Customer user</label>

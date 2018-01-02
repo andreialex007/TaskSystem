@@ -4,9 +4,13 @@
             return { errors: [] };
         },
         mounted() {
+            this.init();
             this.checkSaved();
         },
         methods: {
+            init() {
+                
+            },
             checkSaved() {
                 let isSaved = Cookies.get('isSaved');
                 if (!!isSaved) {
