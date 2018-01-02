@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
+using TaskSystem.DL.Entities;
 using TaskSystem.DL.Entities.Tasks;
 
 namespace TaskSystem.BL.Services
@@ -61,9 +63,35 @@ namespace TaskSystem.BL.Services
                         Description = x.Description,
                         Priority = x.Priority,
                         UserId = x.UserId,
-                        CustomerUserId = x.CustomerUserId
+                        CustomerUserId = x.CustomerUserId,
+                        AvaliableCustomers = new List<AutocompleteItem>
+                        {
+                            new AutocompleteItem
+                            {
+                                Id = x.CustomerId,
+                                Text = x.Customer.Name
+                            }
+                        },
+                        AvaliableCustomerUsers = new List<AutocompleteItem>
+                        {
+                            new AutocompleteItem
+                            {
+                                Id = x.CustomerUserId ?? 0,
+                                Text = x.CustomerUser.Name
+                            }
+                        }
                     })
                     .Single(x => x.Id == id);
+
+            var role = RoleEnum.Technician.CastTo<int>();
+            customer.AvaliableUsers = Db.Set<User>()
+                .Where(x => x.Role == role)
+                .Select(x => new AutocompleteItem
+                {
+                    Id = x.Id,
+                    Text = x.FirstName + " " + x.LastName
+                })
+                .ToList();
 
             return customer;
         }
@@ -78,9 +106,10 @@ namespace TaskSystem.BL.Services
             customer.Name = item.Name;
             customer.Priority = item.Priority;
             customer.Status = item.Status;
-            customer.CustomerId = item.CustomerId;
+            customer.CustomerId = item.CustomerId ?? 0;
             customer.CustomerUserId = item.CustomerUserId;
             customer.Description = item.Description;
+            customer.UserId = item.UserId ?? 0;
 
             Db.SaveChanges();
             item.Id = customer.Id;

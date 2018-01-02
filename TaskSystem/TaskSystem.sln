@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskSystem", "TaskSystem\TaskSystem.csproj", "{2CB100E1-0501-4953-8741-C83EB9AE6A19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskSystem", "TaskSystem\TaskSystem.csproj", "{2CB100E1-0501-4953-8741-C83EB9AE6A19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskSystem.DL", "TaskSystem.DL\TaskSystem.DL.csproj", "{DF93238E-3498-4178-A689-C143716EC9EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskSystem.DL", "TaskSystem.DL\TaskSystem.DL.csproj", "{DF93238E-3498-4178-A689-C143716EC9EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskSystem.BL", "TaskSystem.BL\TaskSystem.BL.csproj", "{5AE69E55-62B5-4387-80CF-4750161BC4A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskSystem.BL", "TaskSystem.BL\TaskSystem.BL.csproj", "{5AE69E55-62B5-4387-80CF-4750161BC4A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

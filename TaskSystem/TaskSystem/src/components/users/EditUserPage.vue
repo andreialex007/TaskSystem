@@ -46,8 +46,8 @@
                         <label>Role</label>
                         <select v-model="user.role" class="form-control">
                             <option value="">Please select role</option>
-                            <template v-for="(item, key) in user.avaliableRoles">
-                                <option v-bind:value="key">{{ item }}</option>
+                            <template v-for="role in user.avaliableRoles">
+                                <option v-bind:value="role.key">{{ role.value }}</option>
                             </template>
                         </select>
                     </div>

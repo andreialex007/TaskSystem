@@ -6,7 +6,7 @@
                     Create
                 </template>
                 <template v-if="!!$route.params.id">
-                    <span class="badge badge-success">#{{$route.params.id}}</span>    
+                    <span class="badge badge-success">#{{$route.params.id}}</span>
                     Edit
                 </template>
                 Work task
@@ -39,13 +39,13 @@
                 <div class="row form-group">
                     <div class="col-md-6">
                         <label>Priority</label>
-                        <select v-model="task.priority" class="form-control" >
+                        <select v-model="task.priority" class="form-control">
                             <option v-for="priority in task.avaliablePriorities" v-bind:value="priority.key">{{ priority.value }}</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label>Status</label>
-                        <select  v-model="task.status"  class="form-control" >
+                        <select v-model="task.status" class="form-control">
                             <option v-for="item in task.avaliableStatuses" v-bind:value="item.key">{{ item.value }}</option>
                         </select>
                     </div>
@@ -53,22 +53,21 @@
                 <div class="row form-group">
                     <div class="col-md-4">
                         <label>Customer</label>
-                        <select2></select2>
+                        <select2 v-bind:options="customerOptions" v-bind:value.sync="task.customerId">
+                        </select2>
                     </div>
                     <div class="col-md-4">
                         <label>Customer user</label>
-                        <select class="form-control" >
-                            <option value="" >Please select item</option>
-                        </select>
+                        <select2 v-bind:options="customerUserOptions" v-bind:value.sync="task.customerUserId">
+
+                        </select2>
                     </div>
                     <div class="col-md-4">
                         <label>Assigned Technician</label>
-                        <select class="form-control" >
-                            <option value="" >Please select item</option>
-                        </select>
+                        <select2 v-bind:options="{ data: task.avaliableUsers }" v-bind:value.sync="task.userId"></select2>
                     </div>
                 </div>
-                
+
 
 
                 <br />
@@ -84,7 +83,7 @@
                 </div>
                 <br />
 
-                <div class="sub-entities" >
+                <div class="sub-entities">
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
@@ -124,8 +123,38 @@
                 }
             };
         },
+        computed: {
+            customerOptions() {
+                return {
+                    ajax: {
+                        url: window.appRoot + '/worktasks/SearchCustomer',
+                        type: "post",
+                        dataType: "json"
+                    },
+                    data: this.task.avaliableCustomers
+                };
+            },
+            customerUserOptions() {
+                return {
+                    ajax: {
+                        url: window.appRoot + '/worktasks/SearchCustomerUsers/' + (this.task.customerId || ""),
+                        type: "post",
+                        dataType: "json"
+                    },
+                    data: this.task.avaliableCustomerUsers
+                };
+            }
+        },
         mounted() {
             this.load();
+        },
+        watch: {
+            'task.customerId'(newVal, oldVal) {
+                if (newVal != oldVal && !!oldVal) {
+                    this.task.customerUserId = null;
+                    this.task.avaliableCustomerUsers = [];
+                }
+            }
         },
         methods: {
             load() {

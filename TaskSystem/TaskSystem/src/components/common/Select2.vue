@@ -1,18 +1,15 @@
 <template>
-    <select ></select>
+    <select>
+        <slot></slot>
+    </select>
 </template>
 
 
 <script>
     export default {
         props: {
-            options: {
-                type: Object, default: () => ({
-                    placeholder: "Please select item",
-                    width: "100%"
-                })
-            },
-            value: { type: String }
+            options: { type: Object, default: () => ({}) },
+            value: {}
         },
         data() {
             return {
@@ -21,21 +18,31 @@
         },
         watch: {
             value: function (value) {
-                $(this.$el).val(value)
+                this.init();
             },
-            options: function (options) {
-                $(this.$el).empty().select2({ data: options })
+            options: {
+                deep: true,
+                handler() {
+                    this.init();
+                }
             }
         },
         mounted() {
-            var vm = this
-            $(this.$el)
-                .select2(this.options)
-                .val(this.value)
-                .trigger('change')
-                .on('change', function () {
-                    vm.$emit('input', this.value)
-                })
+            this.init();
+        },
+        methods: {
+            init() {
+                var vm = this
+                $(this.$el)
+                    .select2(this.options)
+                    .val(this.value)
+                    .trigger('change')
+                    .on('change', function () {
+                        vm.$emit('update:value', this.value)
+                    }).on("select2:select", function () {
+                        console.log("select-select2");
+                    })
+            }
         },
         beforeDestroy() {
             $(this.$el).off().select2('destroy');

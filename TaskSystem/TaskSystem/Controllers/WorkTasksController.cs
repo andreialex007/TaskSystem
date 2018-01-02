@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
@@ -18,6 +20,36 @@ namespace TaskSystem.Controllers
         {
             var model = Service.WorkTask.Search(term, orderBy, isAsc, take, skip);
             return Ok(model);
+        }
+
+
+        [HttpGet]
+        [Route("CustomerUsers/{id}")]
+        public IActionResult CustomerUsers(int id)
+        {
+            var items = Service.CustomerUser.CustomerUsers(id)
+                .Select(x => new { id = x.Id, text = x.Name })
+                .ToList();
+
+            return Ok(new { results = items });
+        }
+
+        [HttpPost]
+        [Route("SearchCustomer")]
+        public IActionResult SearchCustomer(string term)
+        {
+            var items = Service.Customer.Autocomplete(term);
+            return Ok(new { results = items });
+        }
+
+        [HttpPost]
+        [Route("SearchCustomerUsers/{id?}")]
+        public IActionResult SearchCustomerUsers(int? id)
+        {
+            if (!id.HasValue)
+                return Ok(new { results = new List<CustomerUserItem>() });
+            var items = Service.CustomerUser.CustomerUsers(id.Value);
+            return Ok(new { results = items.Select(x => new { id = x.Id, text = x.Name }).ToList() });
         }
 
         [HttpPost]

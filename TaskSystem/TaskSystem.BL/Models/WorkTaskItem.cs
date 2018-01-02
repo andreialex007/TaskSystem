@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Utils;
 
@@ -29,20 +31,28 @@ namespace TaskSystem.BL.Models
         public int Priority { get; set; }
         public string PriorityName => this.Status.CastTo<PriorityEnum>().DescriptionAttr();
 
+        [JsonConverter(typeof(DictionaryArrayConverter))]
         public Dictionary<int, string> AvaliablePriorities => EnumUtil.ToDictionary<PriorityEnum>();
 
+        [JsonConverter(typeof(DictionaryArrayConverter))]
         public Dictionary<int, string> AvaliableStatuses => EnumUtil.ToDictionary<StatusEnum>();
 
         [Required]
         [Display(Name = "Customer")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
 
-        [Required]
-        [Display(Name = "User")]
-        public int UserId { get; set; }
+        public List<AutocompleteItem> AvaliableCustomers { get; set; } = new List<AutocompleteItem>();
 
         [Required]
         [Display(Name = "CustomerUser")]
         public int? CustomerUserId { get; set; }
+
+        public List<AutocompleteItem> AvaliableCustomerUsers { get; set; } = new List<AutocompleteItem>();
+
+        [Required]
+        [Display(Name = "User")]
+        public int? UserId { get; set; }
+
+        public List<AutocompleteItem> AvaliableUsers { get; set; } = new List<AutocompleteItem>();
     }
 }

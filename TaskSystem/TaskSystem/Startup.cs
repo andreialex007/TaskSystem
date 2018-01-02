@@ -66,7 +66,6 @@ namespace TaskSystem
                 .AddJsonOptions(options =>
                 {
                     var settings = options.SerializerSettings;
-                    settings.ContractResolver = new CustomContractResolver();
                 });
         }
 

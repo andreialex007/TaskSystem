@@ -38,6 +38,13 @@ window.toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 var dt = require('datatables.net-bs4');
 window.$.DataTable = dt;
 window.$.select2 = require('select2');
+
+// $.fn.select2.defaults.set("ajax--type", "post");
+// $.fn.select2.defaults.set("ajax--dataType", "json");
+$.fn.select2.defaults.set("placeholder", "Please select item");
+$.fn.select2.defaults.set("width", "100%");
+$.fn.select2.defaults.set("allowClear", true);
+
 // $.fn.select2.defaults.set("theme", "bootstrap4");
 
 window.moment = require('./assets/scripts/moment');

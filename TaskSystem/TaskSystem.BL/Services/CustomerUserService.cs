@@ -56,6 +56,16 @@ namespace TaskSystem.BL.Services
             item.Id = user.Id;
         }
 
+        public List<CustomerUserItem> CustomerUsers(int customerId)
+        {
+            return Db.Set<CustomerUser>().Where(x => x.CustomerId == customerId)
+                .Select(x => new CustomerUserItem
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToList();
+        }
 
 
         public void Delete(int id)

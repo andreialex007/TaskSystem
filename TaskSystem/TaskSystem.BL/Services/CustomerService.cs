@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
@@ -13,7 +14,12 @@ namespace TaskSystem.BL.Services
         {
         }
 
-        public SearchModel<CustomerItem> Search(string term, string orderBy, bool isAsc, int take, int skip)
+        public List<AutocompleteItem> Autocomplete(string term)
+        {
+            return this.Search(term, "Id").data.Select(x => new AutocompleteItem { Id = x.Id, Text = x.Name }).ToList();
+        }
+
+        public SearchModel<CustomerItem> Search(string term, string orderBy, bool isAsc = true, int take = 10, int skip = 0)
         {
             var model = new SearchModel<CustomerItem>();
 

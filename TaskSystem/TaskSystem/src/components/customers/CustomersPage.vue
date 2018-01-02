@@ -102,7 +102,7 @@
                 this.$router.push({ path: "/customers/" + data.id })
             },
             add() {
-
+                this.$router.push({ path: "/customers/add" })
             }
         }
     }
