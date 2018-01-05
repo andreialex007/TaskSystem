@@ -57,5 +57,6 @@ namespace TaskSystem.BL.Models
 
 
         public List<WorkTaskNoteItem> WorkTaskNoteItems { get; set; } = new List<WorkTaskNoteItem>();
+        public List<DocumentItem> Documents { get; set; } = new List<DocumentItem>();
     }
 }

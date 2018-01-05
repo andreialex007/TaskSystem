@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TaskSystem.BL.Models;
+using TaskSystem.BL.Utils;
 using TaskSystem.DL;
 using ControllerBase = TaskSystem.Controllers._Common.ControllerBase;
 
@@ -90,6 +92,17 @@ namespace TaskSystem.Controllers
         {
             Service.Note.Delete(id);
             return Ok();
+        }
+
+        [Route("UploadDocument/{taskId}")]
+        public IActionResult UploadDocument(IFormFile file, int taskId)
+        {
+            if (file == null)
+                return BadRequest("Error while uploading file");
+
+            var result = CommonUtils.UploadFileToDirectory(file, "UploadedDocuments");
+            var doc = Service.Document.AddFile(result, taskId);
+            return Ok(doc);
         }
     }
 }
