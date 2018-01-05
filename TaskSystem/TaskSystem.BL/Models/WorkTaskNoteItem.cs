@@ -10,7 +10,9 @@ namespace TaskSystem.BL.Models
 
         public int UserId { get; set; }
 
-        public int WorkTaskId { get; set; }
+        public string UserName { get; set; }
+
+        public int? WorkTaskId { get; set; }
 
         public DateTime DateAdded { get; set; }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using TaskSystem.BL.Common;
+using TaskSystem.BL.Extensions;
+using TaskSystem.BL.Models;
 using TaskSystem.DL;
 using TaskSystem.DL.Entities.Tasks;
 
@@ -11,7 +13,7 @@ namespace TaskSystem.BL.Services
         {
         }
 
-        public int AddNote(string text, int taskId)
+        public WorkTaskNoteItem AddNote(string text, int taskId)
         {
             var note = new WorkTaskNote
             {
@@ -21,8 +23,22 @@ namespace TaskSystem.BL.Services
                 WorkTaskId = taskId
             };
             Db.WorkTaskNotes.Add(note);
+            Db.SaveChanges();
 
-            return note.Id;
+            return new WorkTaskNoteItem
+            {
+                Id = note.Id,
+                UserId = note.UserId,
+                WorkTaskId = note.WorkTaskId,
+                Note = note.Note,
+                UserName = UserFullName,
+                DateAdded = note.DateAdded
+            };
+        }
+
+        public void Delete(int id)
+        {
+            Db.DeleteById<WorkTaskNote>(id);
         }
     }
 }

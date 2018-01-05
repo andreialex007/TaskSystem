@@ -102,7 +102,25 @@
                                     <br />
                                     <summer-note v-bind:value.sync="newNoteText"></summer-note>
                                     <br />
-                                    <a class="pull-right btn btn-primary" href="javascriptp:;">Add Note</a>
+                                    <a v-on:click="addNote" class="pull-right btn btn-primary" href="javascript:;">Add Note</a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12 notes-list">
+                                    <template v-for="note in task.workTaskNoteItems">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <strong>{{ note.userName }}</strong>
+                                                <em>{{ note.dateAdded }}</em>
+                                                <a v-on:click="deleteNote(note.id)" class="pull-right btn btn-danger btn-xs delete-note" href="javascript:;">
+                                                    <i class="fa fa-times"></i>
+                                                    delete
+                                                </a>
+                                            </div>
+                                            <div v-html="note.note" class="card-block"></div>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +130,9 @@
 
             </form>
         </div>
+        <confirm-modal ref="confirmModal" title="Are you sure?">
+            <span>Are you really want to delete this note?</span>
+        </confirm-modal>
     </main-layout>
 </template>
 
@@ -119,11 +140,13 @@
 <script>
     import mainLayout from "./../layout/MainLayout.vue";
     import uiBase from "./../common/UiBase.vue"
+    import confirmModal from "./../common/ConfirmModal.vue"
 
     export default {
         extends: uiBase,
         components: {
-            mainLayout
+            mainLayout,
+            confirmModal
         },
         data() {
             return {
@@ -188,6 +211,29 @@
                     .catch(x => {
                         component.errors = x.body.errors
                     });
+            },
+            addNote() {
+                if (!this.newNoteText) {
+                    toastr.error("You must specify note", "Error");
+                    return;
+                }
+
+                this.$http.post("/worktasks/AddNote", { note: this.newNoteText, workTaskId: this.$route.params.id })
+                    .then(x => { this.newNoteText = ""; this.task.workTaskNoteItems.push(x.body); });
+            },
+            deleteNote(id) {
+                let component = this;
+                this.$refs.confirmModal.show(function () {
+                    console.log("delete");
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/worktasks/deletenote/" + id)
+                        .then(x => {
+                            component.unblockUI();
+                            component.task.workTaskNoteItems = component.task.workTaskNoteItems.filter(x => x.id != id);
+                        })
+                });
             }
         }
     }

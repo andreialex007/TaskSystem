@@ -54,5 +54,8 @@ namespace TaskSystem.BL.Models
         public int? UserId { get; set; }
 
         public List<AutocompleteItem> AvaliableUsers { get; set; } = new List<AutocompleteItem>();
+
+
+        public List<WorkTaskNoteItem> WorkTaskNoteItems { get; set; } = new List<WorkTaskNoteItem>();
     }
 }

@@ -344,4 +344,18 @@ body {
     z-index: 9999999 !important;
 }
 
+.notes-list .card-block {
+    padding: 7px;
+}
 
+.notes-list > .card {
+    margin-bottom: 5px;
+}
+
+.delete-note {
+    display: none;
+}
+
+.notes-list > .card:hover .delete-note {
+    display: inline-block !important;
+}

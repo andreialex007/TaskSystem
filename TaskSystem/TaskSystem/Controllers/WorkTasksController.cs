@@ -72,8 +72,8 @@ namespace TaskSystem.Controllers
         [Route("AddNote")]
         public IActionResult AddNote([FromBody] WorkTaskNoteItem item)
         {
-            Service.Note.AddNote(item.Note, item.WorkTaskId);
-            return Ok(item);
+            var note = Service.Note.AddNote(item.Note, item.WorkTaskId ?? 0);
+            return Ok(note);
         }
 
         [HttpPost]
@@ -81,6 +81,14 @@ namespace TaskSystem.Controllers
         public IActionResult Delete(int id)
         {
             Service.WorkTask.Delete(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("deletenote/{id?}")]
+        public IActionResult DeleteNote(int id)
+        {
+            Service.Note.Delete(id);
             return Ok();
         }
     }

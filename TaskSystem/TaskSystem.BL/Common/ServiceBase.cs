@@ -18,6 +18,9 @@ namespace TaskSystem.BL.Common
 
         public ClaimsIdentity Identity => ServiceProviders.HttpContext.User.Identity.CastTo<ClaimsIdentity>();
         public int UserId => Identity.Claims.Single(x => x.Type == "Id").Value.TryParse<int>();
-        public int UserEmail => Identity.Claims.Single(x => x.Type == ClaimTypes.Email).Value.TryParse<int>();
+        public string UserEmail => Identity.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
+        public string UserFirstName => Identity.Claims.Single(x => x.Type == ClaimTypes.Name).Value;
+        public string UserLastName => Identity.Claims.Single(x => x.Type == ClaimTypes.Surname).Value;
+        public string UserFullName => UserFirstName + " " + UserLastName;
     }
 }

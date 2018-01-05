@@ -66,6 +66,7 @@ namespace TaskSystem
                 .AddJsonOptions(options =>
                 {
                     var settings = options.SerializerSettings;
+                    settings.DateFormatString = "dd.MM.yyyy";
                 });
         }
 

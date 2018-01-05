@@ -79,7 +79,17 @@ namespace TaskSystem.BL.Services
                                 Id = x.CustomerUserId ?? 0,
                                 Text = x.CustomerUser.Name
                             }
-                        }
+                        },
+                        WorkTaskNoteItems = x.WorkTaskNotes
+                            .Select(n => new WorkTaskNoteItem
+                            {
+                                Id = n.Id,
+                                UserId = n.UserId,
+                                UserName = n.User.FirstName + " " + n.User.LastName,
+                                WorkTaskId = n.WorkTaskId,
+                                Note = n.Note,
+                                DateAdded = n.DateAdded
+                            }).ToList()
                     })
                     .Single(x => x.Id == id);
 
