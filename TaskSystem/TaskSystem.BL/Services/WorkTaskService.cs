@@ -3,6 +3,7 @@ using System.Linq;
 using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
+using TaskSystem.BL.Utils;
 using TaskSystem.DL;
 using TaskSystem.DL.Entities;
 using TaskSystem.DL.Entities.Tasks;
@@ -51,7 +52,7 @@ namespace TaskSystem.BL.Services
 
         public WorkTaskItem Edit(int? id = null)
         {
-            var customer = !id.HasValue
+            var workTaskItem = !id.HasValue
                 ? new WorkTaskItem()
                 : Db.WorkTasks
                     .Select(x => new WorkTaskItem
@@ -99,13 +100,14 @@ namespace TaskSystem.BL.Services
                                 UserName = d.User.FirstName + " " + d.User.LastName,
                                 Path = d.Path,
                                 UserId = d.UserId,
-                                WorkTaskId = d.WorkTaskId
+                                WorkTaskId = d.WorkTaskId   ,
+                                UploadedDate = d.UploadedDate
                             }).ToList()
                     })
                     .Single(x => x.Id == id);
 
             var role = RoleEnum.Technician.CastTo<int>();
-            customer.AvaliableUsers = Db.Set<User>()
+            workTaskItem.AvaliableUsers = Db.Set<User>()
                 .Where(x => x.Role == role)
                 .Select(x => new AutocompleteItem
                 {
@@ -114,7 +116,9 @@ namespace TaskSystem.BL.Services
                 })
                 .ToList();
 
-            return customer;
+            workTaskItem.Documents.ForEach(x=>x.Hash = $"id:{x.Id},user:{this.UserId}".ToHash());
+
+            return workTaskItem;
         }
 
 

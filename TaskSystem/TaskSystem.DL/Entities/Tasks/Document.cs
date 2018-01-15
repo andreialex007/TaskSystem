@@ -1,4 +1,6 @@
-﻿namespace TaskSystem.DL.Entities.Tasks
+﻿using System;
+
+namespace TaskSystem.DL.Entities.Tasks
 {
     public class Document : IPkidEntity
     {
@@ -11,5 +13,7 @@
 
         public int WorkTaskId { get; set; }
         public WorkTask WorkTask { get; set; }
+
+        public DateTime UploadedDate { get; set; }
     }
 }

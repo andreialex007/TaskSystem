@@ -21,7 +21,7 @@ namespace TaskSystem.BL.Services
             var errors = item.GetValidationErrors();
             errors.ThrowIfHasErrors();
 
-            var hash = Hasher.HashPassword(item.Password);
+            var hash = item.Password.ToHash();
 
             var user = Db.Users.SingleOrDefault(x => x.Email == item.Email && x.Password == hash);
             if (user == null)
@@ -81,13 +81,13 @@ namespace TaskSystem.BL.Services
             if (item.Id == 0)
             {
                 user = Db.CreateAndAdd<User>();
-                user.Password = Hasher.HashPassword(item.Password);
+                user.Password = item.Password.ToHash();
             }
             else
             {
                 user = Db.Users.Single(x => x.Id == item.Id);
                 if (item.Password.IsNotEmptyOrWhiteSpace())
-                    user.Password = Hasher.HashPassword(item.Password);
+                    user.Password = item.Password.ToHash();
             }
             user.Email = item.Email;
             user.FirstName = item.FirstName;

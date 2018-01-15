@@ -9,7 +9,7 @@ namespace TaskSystem.BL.Utils
     {
         public static string ReverseMapPath(string path)
         {
-            var appPath = "";
+            var appPath = ServiceProviders.RootDirectory;
             var res = string.Format("/{0}", path.Replace(appPath, string.Empty).Replace("\\", "/"));
             return res;
         }
@@ -61,7 +61,8 @@ namespace TaskSystem.BL.Utils
         public static UrlPath GenerateUrlPathForFile(string directoryName, string fileName)
         {
             var dateFolder = DateTime.Now.ToString("dd-MM-yy");
-            var folder = Path.Combine(ServiceProviders.HttpContext.Request.Path, directoryName, dateFolder, Guid.NewGuid().ToString());
+            var environmentWebRootPath = ServiceProviders.RootDirectory;
+            var folder = Path.Combine(environmentWebRootPath, "Files", directoryName, dateFolder, Guid.NewGuid().ToString());
             Directory.CreateDirectory(folder);
             var path = Path.Combine(folder, fileName);
             var url = ReverseMapPath(path);

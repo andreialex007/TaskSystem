@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TaskSystem.DL;
@@ -12,8 +9,8 @@ namespace TaskSystem.Controllers
 {
 	public class ValuesController : ControllerBase
 	{
-		public ValuesController(IConfiguration configuration, AppDbContext appDbContext)
-			: base(configuration, appDbContext)
+		public ValuesController(IConfiguration configuration, AppDbContext appDbContext, IHostingEnvironment environment)
+			: base(configuration, appDbContext, environment)
 		{
 		}
 

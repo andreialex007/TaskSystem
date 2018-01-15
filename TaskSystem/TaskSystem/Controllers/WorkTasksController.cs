@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +15,8 @@ namespace TaskSystem.Controllers
 {
     public class WorkTasksController : ControllerBase
     {
-        public WorkTasksController(IConfiguration configuration, AppDbContext appDbContext) : base(configuration, appDbContext)
+        public WorkTasksController(IConfiguration configuration, AppDbContext appDbContext, IHostingEnvironment environment)
+            : base(configuration, appDbContext, environment)
         {
         }
 
@@ -58,7 +62,7 @@ namespace TaskSystem.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id = null)
         {
-            var item = Service.WorkTask.Edit(id);
+            var item = Service.WorkTask.Edit(id);     
             return Ok(item);
         }
 
@@ -94,6 +98,7 @@ namespace TaskSystem.Controllers
             return Ok();
         }
 
+        [HttpPost]
         [Route("UploadDocument/{taskId}")]
         public IActionResult UploadDocument(IFormFile file, int taskId)
         {
@@ -103,6 +108,18 @@ namespace TaskSystem.Controllers
             var result = CommonUtils.UploadFileToDirectory(file, "UploadedDocuments");
             var doc = Service.Document.AddFile(result, taskId);
             return Ok(doc);
+        }
+
+        [HttpPost]
+        [Route("DownloadDocument/{documentId}/")]
+        public IActionResult DownloadDocument(int documentId)
+        {
+            var documentItem = Service.Document.GetFile(documentId);
+            var fullPath = ServiceProviders.RootDirectory + documentItem.Path.Replace("/", "\\").Trim('\\');
+            var bytes = System.IO.File.ReadAllBytes(fullPath);
+            var extension = System.IO.Path.GetExtension(fullPath);
+            var mime = CommonValues.FileMappings.Single(x => x.Key.ToLower() == extension).Value;
+            return File(bytes, mime, documentItem.Name);
         }
     }
 }

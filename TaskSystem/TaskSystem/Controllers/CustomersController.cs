@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
@@ -8,7 +9,8 @@ namespace TaskSystem.Controllers
 {
     public class CustomersController : ControllerBase
     {
-        public CustomersController(IConfiguration configuration, AppDbContext appDbContext) : base(configuration, appDbContext)
+        public CustomersController(IConfiguration configuration, AppDbContext appDbContext, IHostingEnvironment environment) 
+            : base(configuration, appDbContext, environment)
         {
         }
 

@@ -72,6 +72,10 @@ $.ajaxSetup({
   },
   beforeSend: function (xhr, settings) {
     xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
+    if (settings.dataType === 'binary') {
+      settings.xhr().responseType = 'arraybuffer';
+      settings.processData = false;
+    }
   }
 });
 

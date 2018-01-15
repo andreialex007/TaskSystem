@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
@@ -8,7 +9,8 @@ namespace TaskSystem.Controllers
 {
     public class UsersController : ControllerBase
     {
-        public UsersController(IConfiguration configuration, AppDbContext appDbContext) : base(configuration, appDbContext)
+        public UsersController(IConfiguration configuration, AppDbContext appDbContext, IHostingEnvironment environment) 
+            : base(configuration, appDbContext, environment)
         {
         }
 

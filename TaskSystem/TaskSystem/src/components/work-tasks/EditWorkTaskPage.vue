@@ -83,23 +83,23 @@
                 </div>
                 <br />
 
-               
+
             </form>
 
             <div class="sub-entities">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Notes</a>
+                        <a class="nav-link active" data-toggle="tab" href="#tasknotes" role="tab">Notes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Documents</a>
+                        <a class="nav-link" data-toggle="tab" href="#documents" role="tab">Documents</a>
                     </li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="tab-pane active" id="tasknotes" role="tabpanel">
                         <div class="row">
                             <div class="col-md-12">
                                 <br />
@@ -127,12 +127,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane js" id="profile" role="tabpanel">
-                        <form method="post" action="https://css-tricks.com/examples/DragAndDropFileUploading//?" enctype="multipart/form-data" novalidate class="box has-advanced-upload">
-
+                    <div class="tab-pane js" id="documents" role="tabpanel">
+                        <form method="post" action="https://css-tricks.com/examples/DragAndDropFileUploading//?"
+                              v-bind:class="{ 'is-uploading' : isUploading }"
+                              enctype="multipart/form-data"
+                              novalidate class="box has-advanced-upload">
                             <div class="box__input">
-                                <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z" /></svg>
-                                <input type="file" name="files[]" id="file" class="box__file" data-multiple-caption="{count} files selected" multiple />
+                                <svg class="box__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43">
+                                    <path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z" />
+                                </svg>
+                                <input v-on:change="fileSelected" type="file" name="files[]" id="work-task-edit-documents" class="box__file" />
                                 <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
                                 <button type="submit" class="box__button">Upload</button>
                             </div>
@@ -140,6 +144,29 @@
                             <div class="box__success">Done! <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Upload more?</a></div>
                             <div class="box__error">Error! <span></span>. <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Try again!</a></div>
                         </form>
+                        <h4>Uploaded documents</h4>
+                        <div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>File Name</th>
+                                        <th>Uploaded by</th>
+                                        <th>Uploaded Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="document in task.documents">
+                                        <th>{{ document.id }}</th>
+                                        <th><a href="javascript:;" v-on:click="downloadDoc(document)">{{ document.name }}</a></th>
+                                        <th>{{ document.userName }}</th>
+                                        <th>{{ document.uploadedDate }}</th>
+                                        <th><a href="javascript:;" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Delete</a></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -166,6 +193,7 @@
         data() {
             return {
                 newNoteText: "",
+                isUploading: false,
                 task: {
 
                 }
@@ -214,6 +242,54 @@
             },
             back() {
                 this.$router.go(-1);
+            },
+            downloadDoc(doc) {
+
+                this.$http.post("/worktasks/DownloadDocument/" + doc.id)
+                    .then(function (response) {
+                        debugger;
+
+                        /*
+                          var url = URL.createObjectURL(result);
+                         var $a = $('<a />', {
+                             'href': url,
+                             'download': 'document.pdf',
+                             'text': "click"
+                         }).hide().appendTo("body")[0].click();
+                         */
+
+                        // URL.revokeObjectURL(url);
+                    });
+                /*
+                $.ajax({
+                    url: window.appRoot + "/WorkTasks/DownloadDocument/" + doc.id + "/",
+                    dataType: "binary",
+                    type: "POST",
+                    success: function (data) {
+                        debugger;
+                        var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
+                        var downloadUrl = URL.createObjectURL(blob);
+                        var a = document.createElement("a");
+                        a.href = downloadUrl;
+                        a.download = "data.xls";
+                        document.body.appendChild(a);
+                        a.click();
+                        $(a).remove();
+                    }
+                })*/
+
+               
+            },
+            fileSelected() {
+                var xhr = new XMLHttpRequest();
+                var fd = new FormData();
+                fd.append("file", document.getElementById('work-task-edit-documents').files[0]);
+                xhr.open("POST", window.appRoot + "/WorkTasks/UploadDocument/" + this.task.id, true);
+                xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
+                xhr.send(fd);
+                xhr.addEventListener("load", function (event) {
+                    alert(event.target.response);
+                }, false);
             },
             save() {
                 var component = this;

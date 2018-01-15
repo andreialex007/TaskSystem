@@ -11,9 +11,10 @@ using TaskSystem.DL;
 namespace TaskSystem.DL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180115204143_add_Document_UploadedDate")]
+    partial class add_Document_UploadedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

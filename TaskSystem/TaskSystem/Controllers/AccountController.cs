@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -19,8 +20,8 @@ namespace TaskSystem.Controllers
 {
     public class AccountController : ControllerBase
     {
-        public AccountController(IConfiguration configuration, AppDbContext appDbContext)
-            : base(configuration, appDbContext)
+        public AccountController(IConfiguration configuration, AppDbContext appDbContext, IHostingEnvironment environment)
+            : base(configuration, appDbContext, environment)
         {
         }
 

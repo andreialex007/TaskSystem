@@ -55,7 +55,7 @@ namespace TaskSystem
                 LastName = "Admin",
                 Email = "admin@admin.com",
                 Role = 1,
-                Password = Hasher.HashPassword("123456i")
+                Password = "123456i".ToHash()
             };
 
             var tech = new User
@@ -64,7 +64,7 @@ namespace TaskSystem
                 LastName = "Technician",
                 Email = "Technician@Technician.com",
                 Role = 2,
-                Password = Hasher.HashPassword("123456i")
+                Password = "123456i".ToHash()
             };
 
             db.Users.Add(admin);
