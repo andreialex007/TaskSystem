@@ -245,21 +245,7 @@
             },
             downloadDoc(doc) {
 
-                this.$http.post("/worktasks/DownloadDocument/" + doc.id)
-                    .then(function (response) {
-                        debugger;
 
-                        /*
-                          var url = URL.createObjectURL(result);
-                         var $a = $('<a />', {
-                             'href': url,
-                             'download': 'document.pdf',
-                             'text': "click"
-                         }).hide().appendTo("body")[0].click();
-                         */
-
-                        // URL.revokeObjectURL(url);
-                    });
                 /*
                 $.ajax({
                     url: window.appRoot + "/WorkTasks/DownloadDocument/" + doc.id + "/",
@@ -277,6 +263,27 @@
                         $(a).remove();
                     }
                 })*/
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', window.appRoot + "/WorkTasks/DownloadDocument/" + doc.id + "/", true);
+                xhr.responseType = 'blob';
+                xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
+                xhr.onload = function (e) {
+                    if (this.status == 200) {
+                        debugger;
+                        var downloadUrl = URL.createObjectURL(this.response)
+                        var link = document.createElement("a");
+                        link.href = downloadUrl;
+                       // link.setAttribute("target", "_blank");
+                        document.body.appendChild(link);
+                        link.click();
+                        // $(a).remove();
+                    } else {
+                        alert('Unable to download .')
+                    }
+                };
+                xhr.send();
 
                
             },
