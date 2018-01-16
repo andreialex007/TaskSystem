@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TaskSystem.BL.Common;
 using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
@@ -100,7 +101,7 @@ namespace TaskSystem.BL.Services
                                 UserName = d.User.FirstName + " " + d.User.LastName,
                                 Path = d.Path,
                                 UserId = d.UserId,
-                                WorkTaskId = d.WorkTaskId   ,
+                                WorkTaskId = d.WorkTaskId,
                                 UploadedDate = d.UploadedDate
                             }).ToList()
                     })
@@ -116,11 +117,8 @@ namespace TaskSystem.BL.Services
                 })
                 .ToList();
 
-            workTaskItem.Documents.ForEach(x=>x.Hash = $"id:{x.Id},user:{this.UserId}".ToHash());
-
             return workTaskItem;
         }
-
 
         public void Save(WorkTaskItem item)
         {
@@ -142,7 +140,18 @@ namespace TaskSystem.BL.Services
 
         public void Delete(int id)
         {
-            Db.DeleteById<WorkTask>(id);
+            var task = Db.WorkTasks
+                .Include(x => x.Documents)
+                .Include(x => x.WorkTaskNotes)
+                .Include(x => x.Invoices)
+                .Single(x => x.Id == id);
+
+            Db.Documents.RemoveRange(task.Documents);
+            Db.WorkTaskNotes.RemoveRange(task.WorkTaskNotes);
+            Db.Invoices.RemoveRange(task.Invoices);
+            Db.WorkTasks.Remove(task);
+            Db.SaveChanges();
+
         }
 
     }

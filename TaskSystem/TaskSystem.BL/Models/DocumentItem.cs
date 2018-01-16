@@ -17,7 +17,5 @@ namespace TaskSystem.BL.Models
         public int WorkTaskId { get; set; }
 
         public DateTime UploadedDate { get; set; }
-
-        public string Hash { get; set; }
     }
 }

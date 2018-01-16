@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -62,7 +63,7 @@ namespace TaskSystem.Controllers
         [Route("edit/{id?}")]
         public IActionResult Edit(int? id = null)
         {
-            var item = Service.WorkTask.Edit(id);     
+            var item = Service.WorkTask.Edit(id);
             return Ok(item);
         }
 
@@ -111,15 +112,31 @@ namespace TaskSystem.Controllers
         }
 
         [HttpPost]
-        [Route("DownloadDocument/{documentId}/")]
-        public IActionResult DownloadDocument(int documentId)
+        [Route("DeleteDocument/{id}")]
+        public IActionResult DeleteDocument(int id)
         {
-            var documentItem = Service.Document.GetFile(documentId);
-            var fullPath = ServiceProviders.RootDirectory + documentItem.Path.Replace("/", "\\").Trim('\\');
+            try
+            {
+                var path = Service.Document.GetFile(id).Path;
+                var fullPath = ServiceProviders.RootDirectory + path.Replace("/", "\\").Trim('\\');
+                System.IO.File.Delete(fullPath);
+            }
+            catch { }
+            Service.Document.DeleteFile(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("DownloadDocument")]
+        public IActionResult DownloadDocument(string path)
+        {
+            var fullPath = ServiceProviders.RootDirectory + path.Replace("/", "\\").Trim('\\');
             var bytes = System.IO.File.ReadAllBytes(fullPath);
             var extension = System.IO.Path.GetExtension(fullPath);
+            var fileName = System.IO.Path.GetFileName(fullPath);
             var mime = CommonValues.FileMappings.Single(x => x.Key.ToLower() == extension).Value;
-            return File(bytes, mime, documentItem.Name);
+            return File(bytes, mime, fileName);
         }
     }
 }

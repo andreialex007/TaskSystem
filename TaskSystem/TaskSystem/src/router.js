@@ -4,6 +4,7 @@ import tasks from "./components/work-tasks/TasksPage.vue"
 import users from "./components/users/UsersPage.vue"
 import editUser from "./components/users/EditUserPage.vue"
 import invoices from "./components/invoices/InvoicesPage.vue"
+import editInvoice from "./components/invoices/EditInvoicePage.vue"
 import editCustomer from "./components/customers/EditCustomerPage.vue"
 import editWorkTaskPage from "./components/work-tasks/EditWorkTaskPage.vue"
 import customers from "./components/customers/CustomersPage.vue"
@@ -29,6 +30,8 @@ const router = new VueRouter({
 		{ path: "/customers/:id", component: editCustomer, name: "editCustomer", exact: false },
 		{ path: "/worktasks/add", component: editWorkTaskPage, name: "addWorkTask", exact: false },
 		{ path: "/worktasks/:id", component: editWorkTaskPage, name: "editWorkTask", exact: false },
+		{ path: "/invoices/task:taskId/add", component: editInvoice, name: "addInvoice", exact: false },
+		{ path: "/invoices/:id", component: editInvoice, name: "editInvoice", exact: false },
 		{ path: '*', component: notFound }
 	],
 	mode: "history"

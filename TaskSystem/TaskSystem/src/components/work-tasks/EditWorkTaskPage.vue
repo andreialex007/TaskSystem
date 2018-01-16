@@ -86,7 +86,7 @@
 
             </form>
 
-            <div class="sub-entities">
+            <div v-show="task.id > 0" class="sub-entities">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
@@ -94,6 +94,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#documents" role="tab">Documents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#invoices" role="tab">Invoices</a>
                     </li>
                 </ul>
 
@@ -144,36 +147,48 @@
                             <div class="box__success">Done! <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Upload more?</a></div>
                             <div class="box__error">Error! <span></span>. <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Try again!</a></div>
                         </form>
-                        <h4>Uploaded documents</h4>
-                        <div>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>File Name</th>
-                                        <th>Uploaded by</th>
-                                        <th>Uploaded Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="document in task.documents">
-                                        <th>{{ document.id }}</th>
-                                        <th><a href="javascript:;" v-on:click="downloadDoc(document)">{{ document.name }}</a></th>
-                                        <th>{{ document.userName }}</th>
-                                        <th>{{ document.uploadedDate }}</th>
-                                        <th><a href="javascript:;" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Delete</a></th>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div v-if="!!task.documents && task.documents.length > 0" >
+                            <br />
+                            <h4>Uploaded documents</h4>
+                            <div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>File Name</th>
+                                            <th>Uploaded by</th>
+                                            <th>Uploaded Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="document in task.documents">
+                                            <th>{{ document.id }}</th>
+                                            <th><a target="_blank" v-bind:href="generateUrl(document)">{{ document.name }}</a></th>
+                                            <th>{{ document.userName }}</th>
+                                            <th>{{ document.uploadedDate }}</th>
+                                            <th><a href="javascript:;" v-on:click="deleteDocument(document)" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Delete</a></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                    </div>
+                    <div id="invoices" class="tab-pane" >
+                        <h4>Invoices of task</h4>
+                        <a href="javascript:;" v-on:click="createInvoice" class="btn btn-primary" >Create invoice</a>
+
+
                     </div>
                 </div>
             </div>
 
         </div>
-        <confirm-modal ref="confirmModal" title="Are you sure?">
+        <confirm-modal ref="confirmDeleteNoteModal" title="Are you sure?">
             <span>Are you really want to delete this note?</span>
+        </confirm-modal>
+        <confirm-modal ref="confirmDeleteFileModal" title="Are you sure?">
+            <span>Are you really want to delete this document?</span>
         </confirm-modal>
     </main-layout>
 </template>
@@ -243,51 +258,32 @@
             back() {
                 this.$router.go(-1);
             },
-            downloadDoc(doc) {
+            generateUrl(doc) {
+                return window.appRoot + "/worktasks/downloaddocument/?path=" + encodeURI(doc.path);
+            },
+            createInvoice() {
+                this.$router.push({ path: `/invoices/task${this.task.id}/add` })
+            },
+            deleteDocument(doc) {
+                let component = this;
 
-
-                /*
-                $.ajax({
-                    url: window.appRoot + "/WorkTasks/DownloadDocument/" + doc.id + "/",
-                    dataType: "binary",
-                    type: "POST",
-                    success: function (data) {
-                        debugger;
-                        var blob = new Blob([data], { type: 'application/vnd.ms-excel' });
-                        var downloadUrl = URL.createObjectURL(blob);
-                        var a = document.createElement("a");
-                        a.href = downloadUrl;
-                        a.download = "data.xls";
-                        document.body.appendChild(a);
-                        a.click();
-                        $(a).remove();
-                    }
-                })*/
-
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', window.appRoot + "/WorkTasks/DownloadDocument/" + doc.id + "/", true);
-                xhr.responseType = 'blob';
-                xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
-                xhr.onload = function (e) {
-                    if (this.status == 200) {
-                        debugger;
-                        var downloadUrl = URL.createObjectURL(this.response)
-                        var link = document.createElement("a");
-                        link.href = downloadUrl;
-                       // link.setAttribute("target", "_blank");
-                        document.body.appendChild(link);
-                        link.click();
-                        // $(a).remove();
-                    } else {
-                        alert('Unable to download .')
-                    }
-                };
-                xhr.send();
-
-               
+                this.$refs.confirmDeleteFileModal.show(function () {
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/worktasks/deletedocument/" + doc.id)
+                        .then(function (response) {
+                            component.unblockUI();
+                            toastr.info("File deleted", "Success");
+                            component.task.documents = component.task.documents.filter(x => x.id != doc.id);
+                        })
+                        .catch(x => {
+                            alert("errors");
+                        });
+                });
             },
             fileSelected() {
+                let component = this;
                 var xhr = new XMLHttpRequest();
                 var fd = new FormData();
                 fd.append("file", document.getElementById('work-task-edit-documents').files[0]);
@@ -295,16 +291,14 @@
                 xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
                 xhr.send(fd);
                 xhr.addEventListener("load", function (event) {
-                    alert(event.target.response);
+                    component.task.documents.push(JSON.parse(event.target.response));
                 }, false);
             },
             save() {
-                var component = this;
-
+                let component = this;
                 this.$http.post("/worktasks/save", this.task)
                     .then(function (response) {
-                        Cookies.set('isSaved', `Work task #${response.body.id} Saved`, { expires: 7, path: '/' });
-                        this.$router.push({ path: `/worktasks` });
+                        toastr.info(`Work task #${response.body.id} Saved`, "Success");
                     })
                     .catch(x => {
                         component.errors = x.body.errors
@@ -321,7 +315,7 @@
             },
             deleteNote(id) {
                 let component = this;
-                this.$refs.confirmModal.show(function () {
+                this.$refs.confirmDeleteNoteModal.show(function () {
                     console.log("delete");
                     component.blockUI({
                         message: 'Deletion, please wait...'

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaskSystem.BL.Common;
+using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Models;
 using TaskSystem.DL;
 using TaskSystem.DL.Entities.Tasks;
@@ -29,6 +30,11 @@ namespace TaskSystem.BL.Services
             return doc;
         }
 
+        public void DeleteFile(int id)
+        {
+            Db.DeleteById<Document>(id);
+        }
+
         public DocumentItem AddFile(string path, int taskId)
         {
             var document = new Document
@@ -36,7 +42,8 @@ namespace TaskSystem.BL.Services
                 Name = System.IO.Path.GetFileName(path),
                 UserId = UserId,
                 Path = path,
-                WorkTaskId = taskId
+                WorkTaskId = taskId  ,
+                UploadedDate = DateTime.Now
             };
 
             Db.Documents.Add(document);
@@ -50,6 +57,7 @@ namespace TaskSystem.BL.Services
                 UserName = UserFullName,
                 WorkTaskId = document.WorkTaskId,
                 Path = path,
+                UploadedDate = DateTime.Now
             };
         }
     }
