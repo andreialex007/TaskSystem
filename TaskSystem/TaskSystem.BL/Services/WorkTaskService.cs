@@ -66,6 +66,7 @@ namespace TaskSystem.BL.Services
                         Priority = x.Priority,
                         UserId = x.UserId,
                         CustomerUserId = x.CustomerUserId,
+
                         AvaliableCustomers = new List<AutocompleteItem>
                         {
                             new AutocompleteItem
@@ -103,6 +104,15 @@ namespace TaskSystem.BL.Services
                                 UserId = d.UserId,
                                 WorkTaskId = d.WorkTaskId,
                                 UploadedDate = d.UploadedDate
+                            }).ToList(),
+                        Invoices = x.Invoices
+                            .Select(i => new InvoiceItem
+                            {
+                                Id = i.Id,
+                                Status = i.Status,
+                                Created = i.Created,
+                                Remarks = i.Remarks,
+                                TaskId = i.WorkTaskId
                             }).ToList()
                     })
                     .Single(x => x.Id == id);

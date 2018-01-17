@@ -20,9 +20,10 @@ namespace TaskSystem.BL.Models
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerUserName { get; set; }
+        public string TaskName { get; set; }
 
         [Required]
-        public int TaskId { get; set; }
+        public int? TaskId { get; set; }
         public int Status { get; set; }
 
         [Required]

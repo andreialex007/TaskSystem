@@ -147,7 +147,7 @@
                             <div class="box__success">Done! <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Upload more?</a></div>
                             <div class="box__error">Error! <span></span>. <a href="https://css-tricks.com/examples/DragAndDropFileUploading//?" class="box__restart" role="button">Try again!</a></div>
                         </form>
-                        <div v-if="!!task.documents && task.documents.length > 0" >
+                        <div v-if="!!task.documents && task.documents.length > 0">
                             <br />
                             <h4>Uploaded documents</h4>
                             <div>
@@ -174,10 +174,28 @@
                             </div>
                         </div>
                     </div>
-                    <div id="invoices" class="tab-pane" >
+                    <div id="invoices" class="tab-pane">
                         <h4>Invoices of task</h4>
-                        <a href="javascript:;" v-on:click="createInvoice" class="btn btn-primary" >Create invoice</a>
-
+                        <a href="javascript:;" v-on:click="createInvoice" class="btn btn-primary">Create invoice</a>
+                        <div>
+                            <div class="list-group">
+                                <div v-for="invoice in task.invoices" href="#" class="list-group-item list-group-item-action flex-column align-items-start invoice-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><a v-bind:href="'/invoices/' + invoice.id"  >Invoice #{{ invoice.id }}</a></h5>
+                                        
+                                        <div class="right-actions" >
+                                            <small>{{ invoice.created }}</small>
+                                            <br />
+                                            <a class="btn btn-danger btn-xs" href="javascript:;">
+                                                <i class="fa fa-times"></i>
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="mb-1">{{ invoice.remarks }}</p>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

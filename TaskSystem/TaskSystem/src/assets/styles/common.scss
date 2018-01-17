@@ -530,3 +530,35 @@ body {
 .box__button:focus {
     background-color: #0f3c4b;
 }
+
+.task-col {
+    position: relative;
+
+    .task-id-badge {
+        position: absolute;
+        right: 26px;
+        top: 42px;
+    }
+}
+
+
+.invoice-item {
+    padding-right: 90px;
+    margin-top: 9px;
+
+    .right-actions {
+        position: absolute;
+        right: 12px;
+        top: 5px;
+
+        .btn {
+            display: none;
+        }
+    }
+}
+
+.invoice-item:hover {
+    .btn {
+        display: inline-block !important;
+    }
+}

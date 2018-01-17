@@ -18,7 +18,7 @@ namespace TaskSystem.BL.Services
         public InvoiceItem New(int taskId)
         {
             var invoiceItem = new InvoiceItem();
-            invoiceItem.TaskId = taskId;
+            
             var task = Db.Set<WorkTask>()
                 .Include(x => x.Customer)
                 .Include(x => x.CustomerUser)
@@ -26,6 +26,8 @@ namespace TaskSystem.BL.Services
 
             invoiceItem.CustomerName = task.Customer.Name;
             invoiceItem.CustomerUserName = task.CustomerUser.Name;
+            invoiceItem.TaskName = task.Name;
+            invoiceItem.TaskId = taskId;
 
             return invoiceItem;
         }
@@ -36,7 +38,9 @@ namespace TaskSystem.BL.Services
                 .Select(x => new InvoiceItem
                 {
                     Id = x.Id,
+                    TaskName = x.WorkTask.Name,
                     TaskId = x.WorkTask.Id,
+                    Remarks = x.Remarks,
                     CustomerName = x.WorkTask.Customer.Name,
                     CustomerUserName = x.WorkTask.CustomerUser.Name,
                     CustomerId = x.WorkTask.CustomerId,
@@ -61,7 +65,8 @@ namespace TaskSystem.BL.Services
                             PaymentType = p.PaymentType
                         })
                         .ToList()
-                }).Single(x => x.Id == invoiceId);
+                })
+                .Single(x => x.Id == invoiceId);
 
             return item;
         }
@@ -74,7 +79,10 @@ namespace TaskSystem.BL.Services
             invoice.WorkTaskId = item.TaskId;
             invoice.Remarks = item.Remarks;
             invoice.Created = item.Created;
+
             Db.SaveChanges();
+
+            item.Id = invoice.Id;
         }
 
         public void Delete(int id)

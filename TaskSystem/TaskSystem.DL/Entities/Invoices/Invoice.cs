@@ -8,10 +8,6 @@ namespace TaskSystem.DL.Entities.Invoices
     public class Invoice : IPkidEntity
     {
         public int Id { get; set; }
-
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
-
         public int Status { get; set; }
 
         public int? WorkTaskId { get; set; }

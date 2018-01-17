@@ -15,7 +15,7 @@ namespace TaskSystem.Controllers
         }
 
         [HttpPost]
-        [Route("/task{taskId?}/add")]
+        [Route("task{taskId}/add")]
         public IActionResult Add(int taskId)
         {
             var invoice = Service.Invoice.New(taskId);
@@ -31,8 +31,8 @@ namespace TaskSystem.Controllers
         }
 
         [HttpPost]
-        [Route("saveinvoice")]
-        public IActionResult SaveInvoice(InvoiceItem item)
+        [Route("save")]
+        public IActionResult SaveInvoice([FromBody] InvoiceItem item)
         {
             Service.Invoice.Save(item);
             return Ok(item);
