@@ -11,9 +11,10 @@ using TaskSystem.DL;
 namespace TaskSystem.DL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180117192546_Invoice_modifications_addTaskReference")]
+    partial class Invoice_modifications_addTaskReference
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,11 +138,7 @@ namespace TaskSystem.DL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
-
                     b.Property<int>("CustomerId");
-
-                    b.Property<string>("Remarks");
 
                     b.Property<int>("Status");
 

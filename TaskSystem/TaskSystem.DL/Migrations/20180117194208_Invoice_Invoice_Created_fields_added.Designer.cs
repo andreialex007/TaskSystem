@@ -11,9 +11,10 @@ using TaskSystem.DL;
 namespace TaskSystem.DL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180117194208_Invoice_Invoice_Created_fields_added")]
+    partial class Invoice_Invoice_Created_fields_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

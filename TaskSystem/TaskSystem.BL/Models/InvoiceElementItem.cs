@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
-using TaskSystem.BL.Common;
-using TaskSystem.BL.Extensions;
-using TaskSystem.BL.Utils;
-
-namespace TaskSystem.BL.Models
+﻿namespace TaskSystem.BL.Models
 {
     public class InvoiceElementItem : ViewModelBase
     {
-        public InvoiceElementItem()
-        {
-           
-        }
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public decimal Qty { get; set; }
+        public decimal Cost { get; set; }
 
-        
+        public int InvoiceId { get; set; }
 
+        public int InvoiceElementCategoryId { get; set; }
     }
 }

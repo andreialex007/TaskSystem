@@ -13,6 +13,7 @@ namespace TaskSystem.BL.Common
             WorkTask = new WorkTaskService(db);
             Note = new NoteService(db);
             Document = new DocumentService(db);
+            Invoice = new InvoiceService(db);
         }
 
         public UserService User { get; set; }
@@ -21,5 +22,6 @@ namespace TaskSystem.BL.Common
         public WorkTaskService WorkTask { get; set; }
         public NoteService Note { get; set; }
         public DocumentService Document { get; set; }
+        public InvoiceService Invoice { get; set; }
     }
 }
