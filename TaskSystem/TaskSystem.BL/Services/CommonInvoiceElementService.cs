@@ -21,7 +21,8 @@ namespace TaskSystem.BL.Services
                 {
                     Id = x.Id,
                     Description = x.Description,
-                    Cost = x.Cost
+                    Cost = x.Cost,
+                    Category = x.InvoiceElementCategory.Name
                 })
                 .ToList();
 
@@ -39,7 +40,8 @@ namespace TaskSystem.BL.Services
                     {
                         Id = x.Id,
                         Description = x.Description,
-                        Cost = x.Cost
+                        Cost = x.Cost,
+                        Category = x.InvoiceElementCategory.Name
                     })
                     .Single(x => x.Id == id);
             }

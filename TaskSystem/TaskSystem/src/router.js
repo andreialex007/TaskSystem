@@ -7,6 +7,7 @@ import invoices from "./components/invoices/InvoicesPage.vue"
 import editInvoice from "./components/invoices/EditInvoicePage.vue"
 import editCustomer from "./components/customers/EditCustomerPage.vue"
 import editWorkTaskPage from "./components/work-tasks/EditWorkTaskPage.vue"
+import invoiceSettings from "./components/invoice-settings/InvoiceSettingsPage.vue"
 import customers from "./components/customers/CustomersPage.vue"
 import notFound from "./components/not-found/NotFoundPage.vue"
 import VueRouter from "vue-router"
@@ -16,7 +17,8 @@ window.mainRoutes = [
 	{ path: "/worktasks", component: tasks, name: "worktasks", exact: false },
 	{ path: "/invoices", component: invoices, name: "invoices", exact: false },
 	{ path: "/customers", component: customers, name: "customers", exact: false },
-	{ path: "/users", component: users, name: "users", exact: false }
+	{ path: "/users", component: users, name: "users", exact: false },
+	{ path: "/invsettings", component: invoiceSettings, name: "invoice settings", exact: true }
 	
 ];
 
