@@ -186,7 +186,7 @@
                                         <div class="right-actions" >
                                             <small>{{ invoice.created }}</small>
                                             <br />
-                                            <a class="btn btn-danger btn-xs" href="javascript:;">
+                                            <a class="btn btn-danger btn-xs" v-on:click="deleteInvoice(invoice)" href="javascript:;">
                                                 <i class="fa fa-times"></i>
                                                 Delete
                                             </a>
@@ -207,6 +207,9 @@
         </confirm-modal>
         <confirm-modal ref="confirmDeleteFileModal" title="Are you sure?">
             <span>Are you really want to delete this document?</span>
+        </confirm-modal>
+        <confirm-modal ref="invoiceDeleteModal" title="Are you sure?">
+            <span>Are you really want to delete this invoice?</span>
         </confirm-modal>
     </main-layout>
 </template>
@@ -281,7 +284,25 @@
             },
             createInvoice() {
                 this.$router.push({ path: `/invoices/task${this.task.id}/add` })
-            },
+			},
+			deleteInvoice(invoice) {
+				let component = this;
+
+				this.$refs.invoiceDeleteModal.show(function () {
+					component.blockUI({
+						message: 'Deletion, please wait...'
+					});
+					component.$http.post("/invoices/delete/" + invoice.id)
+						.then(function (response) {
+							component.unblockUI();
+							toastr.info("Invoice deleted", "Success");
+							component.task.invoices = component.task.invoices.filter(x => x.id != invoice.id);
+						})
+						.catch(x => {
+							alert("errors");
+						});
+				});
+			},
             deleteDocument(doc) {
                 let component = this;
 

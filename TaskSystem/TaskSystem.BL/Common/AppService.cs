@@ -14,6 +14,8 @@ namespace TaskSystem.BL.Common
             Note = new NoteService(db);
             Document = new DocumentService(db);
             Invoice = new InvoiceService(db);
+            InvoiceElementCategory = new InvoiceElementCategoryService(db);
+            CommonInvoiceElement = new CommonInvoiceElementService(db);
         }
 
         public UserService User { get; set; }
@@ -23,5 +25,7 @@ namespace TaskSystem.BL.Common
         public NoteService Note { get; set; }
         public DocumentService Document { get; set; }
         public InvoiceService Invoice { get; set; }
+        public InvoiceElementCategoryService InvoiceElementCategory { get; set; }
+        public CommonInvoiceElementService CommonInvoiceElement { get; set; }
     }
 }
