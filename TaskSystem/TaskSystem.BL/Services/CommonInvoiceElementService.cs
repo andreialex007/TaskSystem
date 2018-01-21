@@ -22,7 +22,8 @@ namespace TaskSystem.BL.Services
                     Id = x.Id,
                     Description = x.Description,
                     Cost = x.Cost,
-                    Category = x.InvoiceElementCategory.Name
+                    Category = x.InvoiceElementCategory.Name,
+                    InvoiceElementCategoryId = x.InvoiceElementCategoryId
                 })
                 .ToList();
 
@@ -41,7 +42,8 @@ namespace TaskSystem.BL.Services
                         Id = x.Id,
                         Description = x.Description,
                         Cost = x.Cost,
-                        Category = x.InvoiceElementCategory.Name
+                        Category = x.InvoiceElementCategory.Name,
+                        InvoiceElementCategoryId = x.InvoiceElementCategoryId
                     })
                     .Single(x => x.Id == id);
             }
@@ -59,6 +61,7 @@ namespace TaskSystem.BL.Services
 
             commonInvoiceElement.Cost = item.Cost;
             commonInvoiceElement.Description = item.Description;
+            commonInvoiceElement.InvoiceElementCategoryId = item.InvoiceElementCategoryId;
 
             Db.SaveChanges();
             item.Id = commonInvoiceElement.Id;

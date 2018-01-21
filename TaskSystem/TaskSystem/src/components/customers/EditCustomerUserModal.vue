@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a v-on:click="ok()" href="javascript:;" class="btn btn-primary">Save customer</a>
+                        <a v-on:click="ok()" href="javascript:;" class="btn btn-primary">Save customer user</a>
                         <a v-on:click="cancel()" href="javascript:;" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
                     </div>
                 </div>

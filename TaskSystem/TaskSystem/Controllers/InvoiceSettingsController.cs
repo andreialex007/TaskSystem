@@ -50,7 +50,7 @@ namespace TaskSystem.Controllers
 
         [HttpPost]
         [Route("SaveCommonInvoiceElement")]
-        public IActionResult SaveInvoice([FromBody] CommonInvoiceElementItem item)
+        public IActionResult SaveCommonInvoiceElement([FromBody] CommonInvoiceElementItem item)
         {
             Service.CommonInvoiceElement.Save(item);
             return Ok(item);
@@ -58,7 +58,7 @@ namespace TaskSystem.Controllers
 
         [HttpPost]
         [Route("SaveInvoiceElementCategory")]
-        public IActionResult SaveInvoice([FromBody] InvoiceElementCategoryItem item)
+        public IActionResult SaveInvoiceElementCategory([FromBody] InvoiceElementCategoryItem item)
         {
             Service.InvoiceElementCategory.Save(item);
             return Ok(item);
