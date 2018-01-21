@@ -16,18 +16,7 @@ namespace TaskSystem.BL.Services
 
         public List<CommonInvoiceElementItem> All()
         {
-            var items = Db.CommonInvoiceElements
-                .Select(x => new CommonInvoiceElementItem
-                {
-                    Id = x.Id,
-                    Description = x.Description,
-                    Cost = x.Cost,
-                    Category = x.InvoiceElementCategory.Name,
-                    InvoiceElementCategoryId = x.InvoiceElementCategoryId
-                })
-                .ToList();
-
-            return items;
+            return Db.AllCommonInvoiceElements();
         }
 
         public CommonInvoiceElementItem Edit(int id)

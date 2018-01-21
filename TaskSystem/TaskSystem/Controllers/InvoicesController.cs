@@ -39,10 +39,43 @@ namespace TaskSystem.Controllers
         }
 
         [HttpPost]
+        [Route("saveelement")]
+        public IActionResult SaveElement([FromBody] InvoiceElementItem item)
+        {
+            Service.InvoiceElement.Save(item);
+            return Ok(item);
+        }
+
+        [HttpPost]
+        [Route("savepayment")]
+        public IActionResult SavePayment([FromBody] InvoicePaymentItem item)
+        {
+            Service.InvoicePayment.Save(item);
+            return Ok(item);
+        }
+
+        [HttpPost]
         [Route("delete/{id?}")]
         public IActionResult Delete(int id)
         {
             Service.Invoice.Delete(id);
+            return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("deleteitem/{id?}")]
+        public IActionResult DeleteItem(int id)
+        {
+            Service.InvoiceElement.Delete(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("deletepayment/{id?}")]
+        public IActionResult DeletePayment(int id)
+        {
+            Service.InvoicePayment.Delete(id);
             return Ok();
         }
 

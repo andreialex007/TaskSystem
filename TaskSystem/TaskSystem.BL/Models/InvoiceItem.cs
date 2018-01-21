@@ -33,5 +33,9 @@ namespace TaskSystem.BL.Models
         public ICollection<InvoiceElementItem> InvoiceElements { get; set; } = new List<InvoiceElementItem>();
         public ICollection<InvoicePaymentItem> InvoicePayments { get; set; } = new List<InvoicePaymentItem>();
 
+
+        public List<CommonInvoiceElementItem> CommonInvoiceElementItems { get; set; } = new List<CommonInvoiceElementItem>();
+        public List<InvoiceElementCategoryItem> Categories { get; set; } = new List<InvoiceElementCategoryItem>();
+
     }
 }

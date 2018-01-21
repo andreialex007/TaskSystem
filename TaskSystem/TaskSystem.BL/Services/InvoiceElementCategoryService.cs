@@ -17,15 +17,7 @@ namespace TaskSystem.BL.Services
 
         public List<InvoiceElementCategoryItem> All()
         {
-            var items = Db.Set<InvoiceElementCategory>()
-                .Select(x => new InvoiceElementCategoryItem
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToList();
-
-            return items;
+            return Db.AllInvoiceElementCategories();
         }
 
         public InvoiceElementCategoryItem Edit(int id)

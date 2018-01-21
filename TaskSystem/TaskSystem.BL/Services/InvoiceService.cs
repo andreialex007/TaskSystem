@@ -18,7 +18,7 @@ namespace TaskSystem.BL.Services
         public InvoiceItem New(int taskId)
         {
             var invoiceItem = new InvoiceItem();
-            
+
             var task = Db.Set<WorkTask>()
                 .Include(x => x.Customer)
                 .Include(x => x.CustomerUser)
@@ -52,6 +52,7 @@ namespace TaskSystem.BL.Services
                             Cost = i.Cost,
                             Qty = i.Qty,
                             InvoiceElementCategoryId = i.InvoiceElementCategoryId,
+                            CategoryName = i.InvoiceElementCategory.Name,
                             InvoiceId = i.InvoiceId
                         })
                         .ToList(),
@@ -67,6 +68,9 @@ namespace TaskSystem.BL.Services
                         .ToList()
                 })
                 .Single(x => x.Id == invoiceId);
+                              
+            item.Categories = Db.AllInvoiceElementCategories();
+            item.CommonInvoiceElementItems = Db.AllCommonInvoiceElements();
 
             return item;
         }

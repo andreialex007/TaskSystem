@@ -16,6 +16,8 @@ namespace TaskSystem.BL.Common
             Invoice = new InvoiceService(db);
             InvoiceElementCategory = new InvoiceElementCategoryService(db);
             CommonInvoiceElement = new CommonInvoiceElementService(db);
+            InvoicePayment = new InvoicePaymentService(db);
+            InvoiceElement = new InvoiceElementService(db);
         }
 
         public UserService User { get; set; }
@@ -27,5 +29,7 @@ namespace TaskSystem.BL.Common
         public InvoiceService Invoice { get; set; }
         public InvoiceElementCategoryService InvoiceElementCategory { get; set; }
         public CommonInvoiceElementService CommonInvoiceElement { get; set; }
+        public InvoicePaymentService InvoicePayment { get; set; }
+        public InvoiceElementService InvoiceElement { get; set; }
     }
 }
