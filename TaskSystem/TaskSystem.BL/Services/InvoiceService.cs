@@ -15,6 +15,44 @@ namespace TaskSystem.BL.Services
         {
         }
 
+        public SearchModel<InvoiceSearchItem> Search(string term, string orderBy, bool isAsc, int take, int skip)
+        {
+            var model = new SearchModel<InvoiceSearchItem>();
+
+            var query = Db.Invoices
+                .Select(x => new InvoiceSearchItem
+                {
+                    Id = x.Id,
+                    Remarks = x.Remarks,
+                    TaskName = x.WorkTask.Description,
+                    Cost = x.InvoiceElements.Sum(e => e.Cost * e.Qty),
+                    Payments = x.InvoicePayments.Sum(p => p.Amount),
+                    CustomerName = x.WorkTask.Customer.Name,
+                    CustomerUserName = x.WorkTask.CustomerUser.Name,
+                    Created = x.Created
+                });
+
+            if (term.IsNotEmptyOrWhiteSpace())
+            {
+                query = query.Where(x =>
+                    x.Remarks.ToLower().Contains(term.ToLower()) ||
+                    x.TaskName.ToLower().Contains(term.ToLower()) ||
+                    x.CustomerName.ToLower().Contains(term.ToLower()) ||
+                    x.CustomerUserName.ToLower().Contains(term.ToLower())
+                );
+            }
+
+            var items = query.OrderBy(orderBy, isAsc)
+                .TakePage(skip, take)
+                .ToList();
+
+            model.data = items;
+            model.recordsTotal = Db.Set<Invoice>().Count();
+            model.recordsFiltered = query.Count();
+
+            return model;
+        }
+
         public InvoiceItem New(int taskId)
         {
             var invoiceItem = new InvoiceItem();
@@ -68,7 +106,7 @@ namespace TaskSystem.BL.Services
                         .ToList()
                 })
                 .Single(x => x.Id == invoiceId);
-                              
+
             item.Categories = Db.AllInvoiceElementCategories();
             item.CommonInvoiceElementItems = Db.AllCommonInvoiceElements();
 

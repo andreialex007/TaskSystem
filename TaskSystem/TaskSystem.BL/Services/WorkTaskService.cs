@@ -40,7 +40,7 @@ namespace TaskSystem.BL.Services
                 );
             }
 
-            var items = query.OrderBy(orderBy)
+            var items = query.OrderBy(orderBy, isAsc)
                 .TakePage(skip, take)
                 .ToList();
 

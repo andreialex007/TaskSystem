@@ -79,5 +79,14 @@ namespace TaskSystem.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("Search")]
+        public IActionResult Search(string term, string orderBy, bool isAsc = true, int take = 10, int skip = 0)
+        {
+            var model = Service.Invoice.Search(term, orderBy, isAsc, take, skip);
+            return Ok(model);
+        }
+
+
     }
 }
