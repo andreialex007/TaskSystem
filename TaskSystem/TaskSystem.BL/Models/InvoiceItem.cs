@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using TaskSystem.BL.Common;
-using TaskSystem.BL.Extensions;
 using TaskSystem.BL.Utils;
 
 namespace TaskSystem.BL.Models
@@ -37,5 +36,7 @@ namespace TaskSystem.BL.Models
         public List<CommonInvoiceElementItem> CommonInvoiceElementItems { get; set; } = new List<CommonInvoiceElementItem>();
         public List<InvoiceElementCategoryItem> Categories { get; set; } = new List<InvoiceElementCategoryItem>();
 
+        [JsonConverter(typeof(DictionaryArrayConverter))]
+        public Dictionary<int, string> AvaliablePaymentTypes { get; set; } = EnumUtil.ToDictionary<PaymentTypeEnum>();
     }
 }

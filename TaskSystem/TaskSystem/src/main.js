@@ -10,9 +10,11 @@ Vue.use(Vuex);
 
 import googleAutocomplete from "./components/common/GoogleAutocomplete.vue"
 import summerNote from "./components/common/SummerNote.vue"
+import bootstrapDatePicker from "./components/common/BootstrapDatePicker.vue"
 import select2 from "./components/common/Select2.vue"
 Vue.component('google-autocomplete', googleAutocomplete);
 Vue.component('summer-note', summerNote);
+Vue.component('date-picker', bootstrapDatePicker);
 Vue.component('select2', select2);
 
 
@@ -27,6 +29,7 @@ import bootstrap4Datatables from './assets/styles/datatables.css'
 import toastr from './assets/styles/toastr.scss'
 import summernote from './assets/summernote/summernote-bs4.css'
 import commonStyles from './assets/styles/common.scss'
+import bootstrapDatePickerCss from './assets/styles/bootstrap-datepicker.css'
 
 //scripts
 window.$ = require('jquery');
@@ -53,6 +56,7 @@ require('./assets/bootstrap/js/bootstrap.bundle');
 
 window.CodeMirror = false;
 require('./assets/summernote/summernote-bs4');
+require('bootstrap-datepicker');
 window.Cookies = require('./assets/scripts/js.cookie');
 
 import router from "./router"

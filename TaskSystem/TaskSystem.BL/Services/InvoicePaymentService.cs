@@ -24,7 +24,7 @@ namespace TaskSystem.BL.Services
 
             element.Amount = item.Amount;
             element.InvoiceId = item.InvoiceId;
-            element.PaymentDate = item.PaymentDate;
+            element.PaymentDate = item.PaymentDate.Value;
             element.PaymentType = item.PaymentType;
 
             Db.SaveChanges();

@@ -81,6 +81,15 @@
                 } else {
                     $.unblockUI();
                 }
+            },
+            replaceOrAddInArray(array, x) {
+                let index = array.map(x => x.id).findIndex(u => u == x.id);
+                if (index === -1) {
+                    array.push(x);
+                } else {
+                    array[index] = x;
+                }
+                this.$forceUpdate();
             }
         }
     }

@@ -135,7 +135,7 @@
 						component.errors = x.body.errors;
 					});
 			},
-			cancel() {
+            cancel() {
 				if (this.cancelFunc)
 					this.cancelFunc();
 				this.hide();
