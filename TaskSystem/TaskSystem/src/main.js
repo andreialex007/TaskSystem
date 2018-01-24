@@ -50,7 +50,7 @@ $.fn.select2.defaults.set("allowClear", true);
 
 // $.fn.select2.defaults.set("theme", "bootstrap4");
 
-window.moment = require('./assets/scripts/moment');
+window.moment = require("moment"); // require('./assets/scripts/moment');
 window.blockUI = require('block-ui');
 require('./assets/bootstrap/js/bootstrap.bundle');
 
@@ -67,7 +67,7 @@ window.isUserLoggedIn = function () {
   return !!localStorage.authToken;
 }
 
-window.appRoot = "http://localhost:12395/api";
+window.appRoot = "http://localhost:85/api";
 Vue.http.options.responseType = "json";
 
 $.ajaxSetup({

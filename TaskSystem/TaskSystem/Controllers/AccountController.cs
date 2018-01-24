@@ -26,6 +26,14 @@ namespace TaskSystem.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        [Route("Test")]
+        public IActionResult Test()
+        {
+            return Content("test success");
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         [Route("RequestToken")]
         public IActionResult RequestToken([FromBody] TokenRequest request)
