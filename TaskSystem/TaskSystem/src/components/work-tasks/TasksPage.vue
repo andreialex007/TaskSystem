@@ -36,6 +36,9 @@
                 </div>
             </ajax-data-table>
         </div>
+        <confirm-modal ref="confirmModal" title="Are you sure?">
+            <span>Are you really want to delete this task?</span>
+        </confirm-modal>
     </main-layout>
 </template>
 
@@ -96,13 +99,31 @@
                 if (type == "edit") {
                     this.edit(data);
                 }
+                if (type == "delete") {
+                    this.deleteItem(data);
+                }
             },
             edit(data) {
                 this.$router.push({ path: "/WorkTasks/" + data.id })
             },
             add() {
                 this.$router.push({ path: "/worktasks/add" })
-            }
+            },
+            deleteItem(item) {
+                let component = this;
+                this.$refs.confirmModal.show(function () {
+                    console.log("delete");
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/WorkTasks/delete/" + item.id)
+                        .then(component.deleteItemCompleted)
+                });
+            },
+            deleteItemCompleted() {
+                this.unblockUI();
+                this.$router.go();
+            },
         }
     }
 </script>

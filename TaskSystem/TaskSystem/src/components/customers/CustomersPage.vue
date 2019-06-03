@@ -4,7 +4,7 @@
             <h1 class="mt-5">
                 Customers
                 <span v-on:click="add()" class="btn btn-success pull-right">
-                    <i class="fa fa-plus" ></i>
+                    <i class="fa fa-plus"></i>
                     Add customer
                 </span>
             </h1>
@@ -36,6 +36,9 @@
                 </div>
             </ajax-data-table>
         </div>
+        <confirm-modal ref="confirmModal" title="Are you sure?">
+            <span>Are you really want to delete this customer?</span>
+        </confirm-modal>
     </main-layout>
 </template>
 
@@ -97,13 +100,31 @@
                 if (type == "edit") {
                     this.edit(data);
                 }
+                if (type == "delete") {
+                    this.deleteItem(data);
+                }
             },
             edit(data) {
                 this.$router.push({ path: "/customers/" + data.id })
             },
             add() {
                 this.$router.push({ path: "/customers/add" })
-            }
+            },
+            deleteItem(item) {
+                let component = this;
+                this.$refs.confirmModal.show(function () {
+                    console.log("delete");
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/customers/delete/" + item.id)
+                        .then(component.deleteItemCompleted)
+                });
+            },
+            deleteItemCompleted() {
+                this.unblockUI();
+                this.$router.go();
+            },
         }
     }
 </script>

@@ -54,7 +54,6 @@
                                     <input type="radio" v-bind:value="priority.key" name="priority" v-model="task.priority">{{ priority.value }}
                                 </label>
                             </template>
-
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
 
                             </div>
@@ -354,8 +353,9 @@
                 let component = this;
                 this.$http.post("/worktasks/save", this.task)
                     .then(function (response) {
-                        toastr.info(`Work task #${response.body.id} Saved`, "Success");
+                        Cookies.set('isSaved', `Customer #${response.body.id} Saved`, { expires: 7, path: '/' });
                         component.errors = [];
+                        location.href = `/WorkTasks/${response.body.id}`;
                     })
                     .catch(x => {
                         component.errors = x.body.errors

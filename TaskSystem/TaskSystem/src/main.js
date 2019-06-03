@@ -64,48 +64,49 @@ import { storeModel } from "./store/app.main.js"
 import main from './components/Main.vue'
 
 window.isUserLoggedIn = function () {
-  return !!localStorage.authToken;
+    return !!localStorage.authToken;
 }
 
-window.appRoot = "http://localhost:12395/api";
+ window.appRoot = "http://second.u0733543.plsk.regruhosting.ru/api"; //production
+// window.appRoot = "http://localhost:12395/api"; //development
 Vue.http.options.responseType = "json";
 
 $.ajaxSetup({
-  headers: {
-    Accept: 'application/json'
-  },
-  beforeSend: function (xhr, settings) {
-    xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
-    if (settings.dataType === 'binary') {
-      settings.xhr().responseType = 'arraybuffer';
-      settings.processData = false;
+    headers: {
+        Accept: 'application/json'
+    },
+    beforeSend: function (xhr, settings) {
+        xhr.setRequestHeader("Authorization", `Bearer ${localStorage.authToken}`);
+        if (settings.dataType === 'binary') {
+            settings.xhr().responseType = 'arraybuffer';
+            settings.processData = false;
+        }
     }
-  }
 });
 
 Vue.http.interceptors.push((request, next) => {
-  request.url = window.appRoot + request.url;
+    request.url = window.appRoot + request.url;
 
-  request.headers.set('Authorization', `Bearer ${localStorage.authToken}`);
-  request.headers.set('Accept', 'application/json');
+    request.headers.set('Authorization', `Bearer ${localStorage.authToken}`);
+    request.headers.set('Accept', 'application/json');
 
-  next((response) => {
-    if (response.status == 401) {
-      localStorage.authToken = "";
-      router.go('/login');
-    }
-  });
+    next((response) => {
+        if (response.status == 401) {
+            localStorage.authToken = "";
+            router.go('/login');
+        }
+    });
 });
 
 let store = new Vuex.Store(storeModel);
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: function (h) {
-    return h(main);
-  }
+    el: '#app',
+    router,
+    store,
+    render: function (h) {
+        return h(main);
+    }
 });
 
 
