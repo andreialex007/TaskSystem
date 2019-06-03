@@ -67,7 +67,7 @@ window.isUserLoggedIn = function () {
   return !!localStorage.authToken;
 }
 
-window.appRoot = "http://localhost:85/api";
+window.appRoot = "http://localhost:12395/api";
 Vue.http.options.responseType = "json";
 
 $.ajaxSetup({

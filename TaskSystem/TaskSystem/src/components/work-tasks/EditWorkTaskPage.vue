@@ -39,9 +39,15 @@
                 <div class="row form-group">
                     <div class="col-md-6">
                         <label>Priority</label>
-                        <select v-model="task.priority" class="form-control">
-                            <option v-for="priority in task.avaliablePriorities" v-bind:value="priority.key">{{ priority.value }}</option>
-                        </select>
+                        <div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <template v-for="priority in task.avaliablePriorities">
+                                    <label v-bind:class="{ 'active' : priority.key == task.priority }" class="btn btn-secondary ">
+                                        <input type="radio" v-bind:value="priority.key" v-model="task.priority">{{ priority.value }}
+                                    </label>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label>Status</label>
@@ -181,9 +187,9 @@
                             <div class="list-group">
                                 <div v-for="invoice in task.invoices" href="#" class="list-group-item list-group-item-action flex-column align-items-start invoice-item">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1"><a v-bind:href="'/invoices/' + invoice.id"  >Invoice #{{ invoice.id }}</a></h5>
-                                        
-                                        <div class="right-actions" >
+                                        <h5 class="mb-1"><a v-bind:href="'/invoices/' + invoice.id">Invoice #{{ invoice.id }}</a></h5>
+
+                                        <div class="right-actions">
                                             <small>{{ invoice.created }}</small>
                                             <br />
                                             <a class="btn btn-danger btn-xs" v-on:click="deleteInvoice(invoice)" href="javascript:;">
@@ -284,25 +290,25 @@
             },
             createInvoice() {
                 this.$router.push({ path: `/invoices/task${this.task.id}/add` })
-			},
-			deleteInvoice(invoice) {
-				let component = this;
+            },
+            deleteInvoice(invoice) {
+                let component = this;
 
-				this.$refs.invoiceDeleteModal.show(function () {
-					component.blockUI({
-						message: 'Deletion, please wait...'
-					});
-					component.$http.post("/invoices/delete/" + invoice.id)
-						.then(function (response) {
-							component.unblockUI();
-							toastr.info("Invoice deleted", "Success");
-							component.task.invoices = component.task.invoices.filter(x => x.id != invoice.id);
-						})
-						.catch(x => {
-							alert("errors");
-						});
-				});
-			},
+                this.$refs.invoiceDeleteModal.show(function () {
+                    component.blockUI({
+                        message: 'Deletion, please wait...'
+                    });
+                    component.$http.post("/invoices/delete/" + invoice.id)
+                        .then(function (response) {
+                            component.unblockUI();
+                            toastr.info("Invoice deleted", "Success");
+                            component.task.invoices = component.task.invoices.filter(x => x.id != invoice.id);
+                        })
+                        .catch(x => {
+                            alert("errors");
+                        });
+                });
+            },
             deleteDocument(doc) {
                 let component = this;
 

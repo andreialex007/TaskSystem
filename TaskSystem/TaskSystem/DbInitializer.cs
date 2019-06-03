@@ -49,8 +49,8 @@ namespace TaskSystem
             db.InvoiceElementCategories.Add(second);
             db.SaveChanges();
 
-            category.CommonInvoiceElements.ToList().ForEach(x=>x.InvoiceElementCategoryId = category.Id);
-            db.CommonInvoiceElements.AddRange(category.CommonInvoiceElements);
+            category.CommonInvoiceElements.ToList().ForEach(x => x.InvoiceElementCategoryId = category.Id);
+            // db.CommonInvoiceElements.AddRange(category.CommonInvoiceElements);
             db.SaveChanges();
         }
 
