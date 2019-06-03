@@ -32,16 +32,20 @@
         },
         methods: {
             init() {
-                var vm = this
-                $(this.$el)
-                    .select2(this.options)
-                    .val(this.value)
-                    .trigger('change')
-                    .on('change', function () {
-                        vm.$emit('update:value', this.value)
-                    }).on("select2:select", function () {
-                        console.log("select-select2");
-                    })
+                try {
+                    var vm = this
+                    $(this.$el)
+                        .select2(this.options)
+                        .val(this.value)
+                        .trigger('change')
+                        .on('change', function () {
+                            vm.$emit('update:value', this.value)
+                        }).on("select2:select", function () {
+                            console.log("select-select2");
+                        })
+                } catch (ex) {
+
+                }
             }
         },
         beforeDestroy() {

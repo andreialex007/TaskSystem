@@ -36,16 +36,27 @@
                     </div>
                 </div>
                 <h4>Task properties and customer info</h4>
+                <div>
+                    <label>
+                        <label class="switch">
+                            <input v-model="task.isTemporaryTask" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="mt-1 d-inline-block float-right ml-2" >Is Temporary Task</span>
+                    </label>
+                </div>
                 <div class="row form-group">
                     <div class="col-md-6">
                         <label>Priority</label>
                         <div>
+                            <template v-for="priority in task.avaliablePriorities">
+                                <label v-bind:class="{ 'active' : priority.key == task.priority }" class="btn btn-secondary ">
+                                    <input type="radio" v-bind:value="priority.key" name="priority" v-model="task.priority">{{ priority.value }}
+                                </label>
+                            </template>
+
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <template v-for="priority in task.avaliablePriorities">
-                                    <label v-bind:class="{ 'active' : priority.key == task.priority }" class="btn btn-secondary ">
-                                        <input type="radio" v-bind:value="priority.key" v-model="task.priority">{{ priority.value }}
-                                    </label>
-                                </template>
+
                             </div>
                         </div>
                     </div>
@@ -344,6 +355,7 @@
                 this.$http.post("/worktasks/save", this.task)
                     .then(function (response) {
                         toastr.info(`Work task #${response.body.id} Saved`, "Success");
+                        component.errors = [];
                     })
                     .catch(x => {
                         component.errors = x.body.errors

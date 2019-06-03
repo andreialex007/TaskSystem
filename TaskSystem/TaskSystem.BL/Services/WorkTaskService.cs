@@ -28,6 +28,7 @@ namespace TaskSystem.BL.Services
                     Name = x.Name,
                     CustomerId = x.CustomerId,
                     CustomerUserId = x.CustomerUserId,
+                    IsTemporaryTask = x.IsTemporaryTask,
                     Priority = x.Priority,
                     Status = x.Status,
                     UserId = x.UserId
@@ -66,6 +67,7 @@ namespace TaskSystem.BL.Services
                         Priority = x.Priority,
                         UserId = x.UserId,
                         CustomerUserId = x.CustomerUserId,
+                        IsTemporaryTask = x.IsTemporaryTask,
 
                         AvaliableCustomers = new List<AutocompleteItem>
                         {
@@ -141,6 +143,7 @@ namespace TaskSystem.BL.Services
             customer.Status = item.Status;
             customer.CustomerId = item.CustomerId ?? 0;
             customer.CustomerUserId = item.CustomerUserId;
+            customer.IsTemporaryTask = item.IsTemporaryTask;
             customer.Description = item.Description;
             customer.UserId = item.UserId ?? 0;
 

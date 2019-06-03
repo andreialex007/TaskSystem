@@ -47,6 +47,8 @@ namespace TaskSystem.BL.Models
         [Display(Name = "CustomerUser")]
         public int? CustomerUserId { get; set; }
 
+        public bool IsTemporaryTask { get; set; }
+
         public List<AutocompleteItem> AvaliableCustomerUsers { get; set; } = new List<AutocompleteItem>();
 
         [Required]

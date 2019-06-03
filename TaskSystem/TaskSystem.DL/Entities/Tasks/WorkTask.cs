@@ -21,6 +21,8 @@ namespace TaskSystem.DL.Entities.Tasks
         public int? CustomerUserId { get; set; }
         public CustomerUser CustomerUser { get; set; }
 
+        public bool IsTemporaryTask { get; set; }
+
         public ICollection<Document> Documents { get; set; }
         public ICollection<WorkTaskNote> WorkTaskNotes { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
